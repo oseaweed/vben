@@ -40,7 +40,7 @@ export function useDataSource(
     clearSelectedRowKeys,
     tableData,
   }: ActionType,
-  emit: EmitType,
+  emit: EmitType
 ) {
   const searchState = reactive<SearchState>({
     sortInfo: {},
@@ -61,13 +61,13 @@ export function useDataSource(
     },
     {
       immediate: true,
-    },
+    }
   );
 
   function handleTableChange(
     pagination: PaginationProps,
     filters: Partial<Recordable<string[]>>,
-    sorter: SorterResult,
+    sorter: SorterResult
   ) {
     const { clearSelectOnPageChange, sortFn, filterFn } = unref(propsRef);
     if (clearSelectOnPageChange) {
@@ -148,7 +148,7 @@ export function useDataSource(
 
   function updateTableDataRecord(
     rowKey: string | number,
-    record: Recordable,
+    record: Recordable
   ): Recordable | undefined {
     const row = findTableDataRecord(rowKey);
 
@@ -158,31 +158,6 @@ export function useDataSource(
       }
       return row;
     }
-  }
-
-  function deleteTableDataRecord(record: Recordable | Recordable[]): Recordable | undefined {
-    if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
-    const records = !Array.isArray(record) ? [record] : record;
-    const recordIndex = records
-      .map((item) => dataSourceRef.value.findIndex((s) => s.key === item.key)) // 取序号
-      .filter((item) => item !== undefined)
-      .sort((a, b) => b - a); // 从大到小排序
-    for (const index of recordIndex) {
-      unref(dataSourceRef).splice(index, 1);
-      unref(propsRef).dataSource?.splice(index, 1);
-    }
-    setPagination({
-      total: unref(propsRef).dataSource?.length,
-    });
-    return unref(propsRef).dataSource;
-  }
-
-  function insertTableDataRecord(record: Recordable, index: number): Recordable | undefined {
-    if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
-    index = index ?? dataSourceRef.value?.length;
-    unref(dataSourceRef).splice(index, 0, record);
-    unref(propsRef).dataSource?.splice(index, 0, record);
-    return unref(propsRef).dataSource;
   }
 
   function findTableDataRecord(rowKey: string | number) {
@@ -231,7 +206,7 @@ export function useDataSource(
       const { pageField, sizeField, listField, totalField } = Object.assign(
         {},
         FETCH_SETTING,
-        fetchSetting,
+        fetchSetting
       );
       let pageParams: Recordable = {};
 
@@ -275,7 +250,7 @@ export function useDataSource(
           setPagination({
             current: currentTotalPage,
           });
-          return await fetch(opt);
+          fetch(opt);
         }
       }
 
@@ -295,7 +270,6 @@ export function useDataSource(
         items: unref(resultItems),
         total: resultTotal,
       });
-      return resultItems;
     } catch (error) {
       emit('fetch-error', error);
       dataSourceRef.value = [];
@@ -320,7 +294,7 @@ export function useDataSource(
   }
 
   async function reload(opt?: FetchParams) {
-    return await fetch(opt);
+    await fetch(opt);
   }
 
   onMounted(() => {
@@ -340,8 +314,6 @@ export function useDataSource(
     reload,
     updateTableData,
     updateTableDataRecord,
-    deleteTableDataRecord,
-    insertTableDataRecord,
     findTableDataRecord,
     handleTableChange,
   };

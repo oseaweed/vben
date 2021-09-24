@@ -6,9 +6,6 @@ import { useRouter } from 'vue-router';
 
 import { REDIRECT_NAME } from '/@/router/constant';
 
-/**
- * Listening to page changes and dynamically changing site titles
- */
 export function useTitle() {
   const { title } = useGlobSetting();
   const { t } = useI18n();
@@ -20,7 +17,6 @@ export function useTitle() {
     () => currentRoute.value.path,
     () => {
       const route = unref(currentRoute);
-
       if (route.name === REDIRECT_NAME) {
         return;
       }
@@ -28,6 +24,6 @@ export function useTitle() {
       const tTitle = t(route?.meta?.title as string);
       pageTitle.value = tTitle ? ` ${tTitle} - ${title} ` : `${title}`;
     },
-    { immediate: true },
+    { immediate: true }
   );
 }

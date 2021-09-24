@@ -1,7 +1,7 @@
 <template>
   <Select
     @dropdownVisibleChange="handleFetch"
-    v-bind="$attrs"
+    v-bind="attrs"
     @change="handleChange"
     :options="getOptions"
     v-model:value="state"
@@ -41,7 +41,12 @@
     },
     inheritAttrs: false,
     props: {
-      value: [Array, Object, String, Number],
+      value: propTypes.oneOfType([
+        propTypes.object,
+        propTypes.number,
+        propTypes.string,
+        propTypes.array,
+      ]),
       numberToString: propTypes.bool,
       api: {
         type: Function as PropType<(arg?: Recordable) => Promise<OptionsItem[]>>,
@@ -95,7 +100,7 @@
         () => {
           !unref(isFirstLoad) && fetch();
         },
-        { deep: true },
+        { deep: true }
       );
 
       async function fetch() {

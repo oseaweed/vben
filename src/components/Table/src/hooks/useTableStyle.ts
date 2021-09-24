@@ -6,14 +6,11 @@ import { isFunction } from '/@/utils/is';
 export function useTableStyle(propsRef: ComputedRef<BasicTableProps>, prefixCls: string) {
   function getRowClassName(record: TableCustomRecord, index: number) {
     const { striped, rowClassName } = unref(propsRef);
-    const classNames: string[] = [];
-    if (striped) {
-      classNames.push((index || 0) % 2 === 1 ? `${prefixCls}-row__striped` : '');
-    }
+    if (!striped) return;
     if (rowClassName && isFunction(rowClassName)) {
-      classNames.push(rowClassName(record, index));
+      return rowClassName(record);
     }
-    return classNames.filter((cls) => !!cls).join(' ');
+    return (index || 0) % 2 === 1 ? `${prefixCls}-row__striped` : '';
   }
 
   return { getRowClassName };

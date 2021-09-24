@@ -111,7 +111,7 @@
         unref(isFixedHeightPage) &&
           props.canResize &&
           warn(
-            "'canResize' of BasicTable may not work in PageWrapper with 'fixedHeight' (especially in hot updates)",
+            "'canResize' of BasicTable may not work in PageWrapper with 'fixedHeight' (especially in hot updates)"
           );
       });
 
@@ -141,8 +141,6 @@
         getRawDataSource,
         setTableData,
         updateTableDataRecord,
-        deleteTableDataRecord,
-        insertTableDataRecord,
         findTableDataRecord,
         fetch,
         getRowKey,
@@ -159,7 +157,7 @@
           getFieldsValue: formActions.getFieldsValue,
           clearSelectedRowKeys,
         },
-        emit,
+        emit
       );
 
       function handleTableChange(...args) {
@@ -184,7 +182,7 @@
         tableElRef,
         getColumnsRef,
         getRowSelectionRef,
-        getDataSourceRef,
+        getDataSourceRef
       );
 
       const { customRow } = useCustomRow(getProps, {
@@ -213,7 +211,7 @@
         getProps,
         getScrollRef,
         tableElRef,
-        getDataSourceRef,
+        getDataSourceRef
       );
 
       const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } =
@@ -281,8 +279,6 @@
         setPagination,
         setTableData,
         updateTableDataRecord,
-        deleteTableDataRecord,
-        insertTableDataRecord,
         findTableDataRecord,
         redoHeight,
         setSelectedRowKeys,
@@ -338,13 +334,6 @@
 
   @prefix-cls: ~'@{namespace}-basic-table';
 
-  [data-theme='dark'] {
-    .ant-table-tbody > tr:hover.ant-table-row-selected > td,
-    .ant-table-tbody > tr.ant-table-row-selected td {
-      background-color: #262626;
-    }
-  }
-
   .@{prefix-cls} {
     max-width: 100%;
 
@@ -362,6 +351,12 @@
         margin-bottom: 16px;
         background-color: @component-background;
         border-radius: 2px;
+      }
+    }
+
+    &--inset {
+      .ant-table-wrapper {
+        padding: 0;
       }
     }
 
@@ -418,17 +413,11 @@
 
       .ant-table-body {
         overflow-x: hidden !important;
-        //  overflow-y: scroll !important;
+        overflow-y: scroll !important;
       }
 
       td {
         padding: 12px 8px;
-      }
-    }
-
-    &--inset {
-      .ant-table-wrapper {
-        padding: 0;
       }
     }
   }

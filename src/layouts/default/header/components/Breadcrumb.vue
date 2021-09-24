@@ -101,12 +101,12 @@
           if (!meta) {
             return !!name;
           }
-          const { title, hideBreadcrumb } = meta;
-          if (!title || hideBreadcrumb) {
+          const { title, hideBreadcrumb, hideMenu } = meta;
+          if (!title || hideBreadcrumb || hideMenu) {
             return false;
           }
           return true;
-        }).filter((item) => !item.meta?.hideBreadcrumb);
+        }).filter((item) => !item.meta?.hideBreadcrumb || !item.meta?.hideMenu);
       }
 
       function handleClick(route: RouteLocationMatched, paths: string[], e: Event) {

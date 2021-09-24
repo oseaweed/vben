@@ -14,7 +14,11 @@
       <Divider
         type="vertical"
         class="action-divider"
-        v-if="divider && index < getActions.length - 1"
+        v-if="
+          divider &&
+          index < getActions.length - (dropDownActions ? 0 : 1) &&
+          getDropdownList.length > 0
+        "
       />
     </template>
     <Dropdown

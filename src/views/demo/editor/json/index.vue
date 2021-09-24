@@ -14,8 +14,8 @@
   </PageWrapper>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, unref, h } from 'vue';
-  import { CodeEditor, JsonPreview, MODE } from '/@/components/CodeEditor';
+  import { defineComponent, ref } from 'vue';
+  import { CodeEditor } from '/@/components/CodeEditor';
   import { PageWrapper } from '/@/components/Page';
   import { Radio, Space, Modal } from 'ant-design-vue';
 
@@ -62,34 +62,27 @@
       ASpace: Space,
     },
     setup() {
-      const modeValue = ref<MODE>(MODE.JSON);
+      const modeValue = ref('application/json');
       const value = ref(jsonData);
 
       function handleModeChange(e: ChangeEvent) {
         const mode = e.target.value;
-        if (mode === MODE.JSON) {
+        if (mode === 'application/json') {
           value.value = jsonData;
           return;
         }
-        if (mode === MODE.HTML) {
+        if (mode === 'htmlmixed') {
           value.value = htmlData;
           return;
         }
-        if (mode === MODE.JS) {
+        if (mode === 'javascript') {
           value.value = jsData;
           return;
         }
       }
 
       function showData() {
-        if (unref(modeValue) === 'application/json') {
-          Modal.info({
-            title: '编辑器当前值',
-            content: h(JsonPreview, { data: JSON.parse(value.value) }),
-          });
-        } else {
-          Modal.info({ title: '编辑器当前值', content: value.value });
-        }
+        Modal.info({ title: '编辑器当前值', content: value.value });
       }
 
       return { value, modeValue, handleModeChange, showData };

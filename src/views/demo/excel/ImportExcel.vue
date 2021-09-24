@@ -1,6 +1,6 @@
 <template>
   <PageWrapper title="excel数据导入示例">
-    <ImpExcel @success="loadDataSuccess" dateFormat="YYYY-MM-DD">
+    <ImpExcel @success="loadDataSuccess">
       <a-button class="m-3"> 导入Excel </a-button>
     </ImpExcel>
     <BasicTable

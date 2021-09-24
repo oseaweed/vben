@@ -5,9 +5,9 @@
       :class="{ [`${prefixCls}__normal`]: true, 'ellipsis-cell': column.ellipsis }"
       @click="handleEdit"
     >
-      <div class="cell-content" :title="column.ellipsis ? getValues ?? '' : ''">
-        {{ getValues ? getValues : '&nbsp;' }}
-      </div>
+      <div class="cell-content" :title="column.ellipsis ? getValues ?? '' : ''">{{
+        getValues ? getValues : '&nbsp;'
+      }}</div>
       <FormOutlined :class="`${prefixCls}__normal-icon`" v-if="!column.editRow" />
     </div>
 
@@ -246,7 +246,7 @@
         if (!record) return false;
         const { key, dataIndex } = column;
         const value = unref(currentValueRef);
-        if (!key && !dataIndex) return;
+        if (!key || !dataIndex) return;
 
         const dataKey = (dataIndex || key) as string;
 
@@ -364,7 +364,13 @@
         /* eslint-disable */
         props.record.onSubmitEdit = async () => {
           if (isArray(props.record?.submitCbs)) {
-            if (!props.record?.onValid?.()) return;
+            const validFns = (props.record?.validCbs || []).map((fn) => fn());
+
+            const res = await Promise.all(validFns);
+
+            const pass = res.every((item) => !!item);
+
+            if (!pass) return;
             const submitFns = props.record?.submitCbs || [];
             submitFns.forEach((fn) => fn(false, false));
             table.emit?.('edit-row-end');

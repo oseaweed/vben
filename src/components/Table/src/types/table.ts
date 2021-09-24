@@ -25,7 +25,7 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
 
   /**
    * Callback executed when select/deselect one row
-   * @type Function
+   * @type FunctionT
    */
   onSelect?: (record: T, selected: boolean, selectedRows: Object[], nativeEvent: Event) => any;
 
@@ -95,8 +95,6 @@ export interface TableActionType {
   setPagination: (info: Partial<PaginationProps>) => void;
   setTableData: <T = Recordable>(values: T[]) => void;
   updateTableDataRecord: (rowKey: string | number, record: Recordable) => Recordable | void;
-  deleteTableDataRecord: (record: Recordable | Recordable[]) => Recordable | void;
-  insertTableDataRecord: (record: Recordable, index?: number) => Recordable | void;
   findTableDataRecord: (rowKey: string | number) => Recordable | void;
   getColumns: (opt?: GetColumnsParams) => BasicColumn[];
   setColumns: (columns: BasicColumn[] | string[]) => void;
@@ -291,7 +289,7 @@ export interface BasicTableProps<T = any> {
    * Row's className
    * @type Function
    */
-  rowClassName?: (record: TableCustomRecord<T>, index: number) => string;
+  rowClassName?: (record: TableCustomRecord<T>) => string;
 
   /**
    * Row selection config

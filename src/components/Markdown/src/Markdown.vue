@@ -38,7 +38,7 @@
 
       const { getLocale } = useLocale();
       const { getDarkMode } = useRootSetting();
-      const valueRef = ref(props.value || '');
+      const valueRef = ref('');
 
       watch(
         [() => getDarkMode.value, () => initedRef.value],
@@ -52,7 +52,7 @@
         {
           immediate: true,
           flush: 'post',
-        },
+        }
       );
 
       watch(
@@ -62,7 +62,7 @@
             instance.getVditor()?.setValue(v);
           }
           valueRef.value = v;
-        },
+        }
       );
 
       const getCurrentLang = computed((): 'zh_CN' | 'en_US' | 'ja_JP' | 'ko_KR' => {
@@ -90,9 +90,6 @@
           theme: getDarkMode.value === 'dark' ? 'dark' : 'classic',
           lang: unref(getCurrentLang),
           mode: 'sv',
-          fullscreen: {
-            index: 520,
-          },
           preview: {
             actions: [],
           },
