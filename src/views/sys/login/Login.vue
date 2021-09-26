@@ -14,7 +14,7 @@
     <div class="container relative h-full py-2 mx-auto sm:px-10">
       <div class="flex h-full">
         <div class="hidden min-h-full pl-4 mr-4 xl:flex xl:flex-col xl:w-6/12">
-          <AppLogo class="-enter-x" />
+          <AppLogo class="-enter-x" />hde
           <div class="my-auto">
             <img
               :alt="title"
