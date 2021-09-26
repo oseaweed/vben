@@ -1,9 +1,17 @@
+import type { UserInfo } from '/#/store';
+
 /**
  * @description: Login interface parameters
  */
 export interface LoginParams {
-  username: string;
-  password: string;
+  account: string; // 用户名
+  password: string; // 密码
+  tenantId: string; // 租户ID
+  type: string; // 账户类型
+  grantType: string; // 授权类型（social 第三方、captcha 验证码、password 密码）
+  // scope     : 'all', // 授权域
+  code: string; // 验证码的值（header传值）
+  key: string; // 验证码的索引（header传值）
 }
 
 export interface RoleInfo {
@@ -14,9 +22,9 @@ export interface RoleInfo {
 /**
  * @description: Login interface return value
  */
-export interface LoginResultModel {
+export interface LoginResultModel extends UserInfo {
   userId: string | number;
-  token: string;
+  accessToken: string;
   role: RoleInfo;
 }
 
@@ -28,9 +36,7 @@ export interface GetUserInfoModel {
   // 用户id
   userId: string | number;
   // 用户名
-  username: string;
-  // 真实名字
-  realName: string;
+  userName: string;
   // 头像
   avatar: string;
   // 介绍

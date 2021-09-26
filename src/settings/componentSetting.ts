@@ -42,4 +42,9 @@ export default {
     // After opening, the menu, modal, drawer will change the pop-up scroll bar to native
     native: false,
   },
+  // 登录设置
+  login: {
+    // 租户id
+    tenantId: '666666',
+  },
 };

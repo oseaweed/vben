@@ -16,6 +16,7 @@ import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
 import { useUserStoreWithOut } from '/@/store/modules/user';
+import { Base64 } from 'js-base64';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
@@ -42,14 +43,18 @@ const transform: AxiosTransform = {
     }
     // 错误的时候返回
 
-    const { data } = res;
+    const { data, config } = res;
     if (!data) {
       // return '[HTTP] Request has no return value';
       throw new Error(t('sys.api.apiRequestFailed'));
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code, result, message } = data;
-
+    const { success, msg, code, data: result } = data;
+    // 处理文件流
+    const { responseType } = config;
+    if (responseType && responseType == 'blob') {
+      return data;
+    }
     // 这里逻辑可以根据项目进行修改
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
     if (hasSuccess) {
@@ -183,7 +188,7 @@ const transform: AxiosTransform = {
         }
         return Promise.reject(error);
       }
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error);
     }
 
@@ -199,12 +204,15 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // authentication schemes，e.g: Bearer
         // authenticationScheme: 'Bearer',
-        authenticationScheme: '',
+        authenticationScheme: 'Bearer',
         timeout: 10 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
 
-        headers: { 'Content-Type': ContentTypeEnum.JSON },
+        headers: {
+          'Content-Type': ContentTypeEnum.JSON,
+          Authorization: `Basic ${Base64.encode('saber:saber_secret')}`,
+        },
         // 如果是form-data格式
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
         // 数据处理方式

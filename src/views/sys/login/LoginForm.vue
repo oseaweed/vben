@@ -24,14 +24,25 @@
         :placeholder="t('sys.login.password')"
       />
     </FormItem>
-
+    <FormItem name="code" class="enter-x enter-code">
+      <Input size="large" v-model:value="formData.code" placeholder="请输入验证码" />
+      <img
+        style="position: absolute; top: -10px; right: 1px; height: 37px"
+        :src="captchaInfo.image"
+        @click="handleVerificationCode"
+      />
+    </FormItem>
     <ARow class="enter-x">
       <ACol :span="12">
         <FormItem>
+          <a-radio-group name="radioGroup" v-model:value="loginType">
+            <a-radio value="1">系统登录</a-radio>
+            <a-radio value="2">域登陆</a-radio>
+          </a-radio-group>
           <!-- No logic, you need to deal with it yourself -->
-          <Checkbox v-model:checked="rememberMe" size="small">
+          <!-- <Checkbox v-model:checked="rememberMe" size="small">
             {{ t('sys.login.rememberMe') }}
-          </Checkbox>
+          </Checkbox> -->
         </FormItem>
       </ACol>
       <ACol :span="12">
@@ -71,27 +82,13 @@
     </ARow>
 
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
-
-    <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
-      <GithubFilled />
-      <WechatFilled />
-      <AlipayCircleFilled />
-      <GoogleCircleFilled />
-      <TwitterCircleFilled />
-    </div>
   </Form>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, toRaw, unref, computed } from 'vue';
+  import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
 
-  import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
-  import {
-    GithubFilled,
-    WechatFilled,
-    AlipayCircleFilled,
-    GoogleCircleFilled,
-    TwitterCircleFilled,
-  } from '@ant-design/icons-vue';
+  import { Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
+
   import LoginFormTitle from './LoginFormTitle.vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -101,6 +98,10 @@
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
   //import { onKeyStroke } from '@vueuse/core';
+  import { useGlobSetting } from '/@/hooks/setting';
+  const { loginConfig } = useGlobSetting();
+  import componentSetting from '/@/settings/componentSetting';
+  import { getCaptchaCode } from '/@/api/sys/user';
 
   const ACol = Col;
   const ARow = Row;
@@ -116,11 +117,13 @@
 
   const formRef = ref();
   const loading = ref(false);
-  const rememberMe = ref(false);
+  // const rememberMe = ref(false);
+  const captchaInfo = ref({ image: '', key: '' }); // 验证码
 
   const formData = reactive({
-    account: 'vben',
-    password: '123456',
+    account: '',
+    password: '',
+    code: '',
   });
 
   const { validForm } = useFormValid(formRef);
@@ -128,6 +131,7 @@
   //onKeyStroke('Enter', handleLogin);
 
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
+  const { login } = componentSetting;
 
   async function handleLogin() {
     const data = await validForm();
@@ -136,19 +140,25 @@
       loading.value = true;
       const userInfo = await userStore.login(
         toRaw({
+          isDomainLogin: loginType.value == '2' || loginConfig == 2, //域登录
+          tenantId: login.tenantId,
+          type: 'account',
+          grantType: 'captcha',
           password: data.password,
-          username: data.account,
+          account: data.account,
+          key: captchaInfo.value.key, // 验证码key
+          code: data.code, // 验证码code
           mode: 'none', //不要默认的错误提示
         }),
       );
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
-          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.userName}`,
           duration: 3,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       createErrorModal({
         title: t('sys.api.errorTip'),
         content: error.message || t('sys.api.networkExceptionMsg'),
@@ -158,4 +168,15 @@
       loading.value = false;
     }
   }
+
+  // 获取验证码
+  async function handleVerificationCode() {
+    captchaInfo.value = await getCaptchaCode();
+  }
+
+  const showRadioGroup = loginConfig == 3;
+  const loginType = ref(showRadioGroup ? '2' : '1');
+  onMounted(() => {
+    handleVerificationCode();
+  });
 </script>
