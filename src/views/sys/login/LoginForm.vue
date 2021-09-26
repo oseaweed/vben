@@ -1,5 +1,6 @@
 <template>
   <LoginFormTitle v-show="getShow" class="enter-x" />
+  haode 
   <Form
     class="p-4 enter-x"
     :model="formData"
