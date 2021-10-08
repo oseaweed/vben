@@ -60,20 +60,12 @@
 
       const { currentRoute } = useRouter();
 
-      const { handleOpenChange, setOpenKeys, getOpenKeys } = useOpenKeys(
-        menuState,
-        items,
-        mode as any,
-        accordion,
-      );
+      const { handleOpenChange, setOpenKeys, getOpenKeys } = useOpenKeys(menuState, items, mode as any, accordion);
 
       const getIsTopMenu = computed(() => {
         const { type, mode } = props;
 
-        return (
-          (type === MenuTypeEnum.TOP_MENU && mode === MenuModeEnum.HORIZONTAL) ||
-          (props.isHorizontal && unref(getSplit))
-        );
+        return (type === MenuTypeEnum.TOP_MENU && mode === MenuModeEnum.HORIZONTAL) || (props.isHorizontal && unref(getSplit));
       });
 
       const getMenuClass = computed(() => {
@@ -114,7 +106,7 @@
           () => props.items,
           () => {
             handleMenuChange();
-          },
+          }
         );
 
       async function handleMenuClick({ key }: { key: string; keyPath: string[] }) {

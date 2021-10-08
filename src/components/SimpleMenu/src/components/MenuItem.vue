@@ -39,8 +39,7 @@
 
       const active = ref(false);
 
-      const { getItemStyle, getParentList, getParentMenu, getParentRootMenu } =
-        useMenuItem(instance);
+      const { getItemStyle, getParentList, getParentMenu, getParentRootMenu } = useMenuItem(instance);
 
       const { prefixCls } = useDesign('menu');
 
@@ -98,7 +97,7 @@
             active.value = false;
           }
         },
-        { immediate: true },
+        { immediate: true }
       );
 
       return { getClass, prefixCls, getItemStyle, getCollapse, handleClickItem, showTooptip };

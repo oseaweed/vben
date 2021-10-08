@@ -99,7 +99,7 @@
             ],
           });
         },
-        { immediate: true },
+        { immediate: true }
       );
       return { chartRef };
     },

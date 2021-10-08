@@ -14,13 +14,7 @@
       </template>
     </BasicForm>
 
-    <Table
-      ref="tableElRef"
-      v-bind="getBindValues"
-      :rowClassName="getRowClassName"
-      v-show="getEmptyDataIsShowTable"
-      @change="handleTableChange"
-    >
+    <Table ref="tableElRef" v-bind="getBindValues" :rowClassName="getRowClassName" v-show="getEmptyDataIsShowTable" @change="handleTableChange">
       <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
@@ -32,12 +26,7 @@
   </div>
 </template>
 <script lang="ts">
-  import type {
-    BasicTableProps,
-    TableActionType,
-    SizeType,
-    ColumnChangeParam,
-  } from './types/table';
+  import type { BasicTableProps, TableActionType, SizeType, ColumnChangeParam } from './types/table';
 
   import { defineComponent, ref, computed, unref, toRaw, inject, watchEffect } from 'vue';
   import { Table } from 'ant-design-vue';
@@ -110,29 +99,14 @@
       watchEffect(() => {
         unref(isFixedHeightPage) &&
           props.canResize &&
-          warn(
-            "'canResize' of BasicTable may not work in PageWrapper with 'fixedHeight' (especially in hot updates)",
-          );
+          warn("'canResize' of BasicTable may not work in PageWrapper with 'fixedHeight' (especially in hot updates)");
       });
 
       const { getLoading, setLoading } = useLoading(getProps);
-      const {
-        getPaginationInfo,
-        getPagination,
-        setPagination,
-        setShowPagination,
-        getShowPagination,
-      } = usePagination(getProps);
+      const { getPaginationInfo, getPagination, setPagination, setShowPagination, getShowPagination } = usePagination(getProps);
 
-      const {
-        getRowSelection,
-        getRowSelectionRef,
-        getSelectRows,
-        clearSelectedRowKeys,
-        getSelectRowKeys,
-        deleteSelectRowByKey,
-        setSelectedRowKeys,
-      } = useRowSelection(getProps, tableData, emit);
+      const { getRowSelection, getRowSelectionRef, getSelectRows, clearSelectedRowKeys, getSelectRowKeys, deleteSelectRowByKey, setSelectedRowKeys } =
+        useRowSelection(getProps, tableData, emit);
 
       const {
         handleTableChange: onTableChange,
@@ -159,7 +133,7 @@
           getFieldsValue: formActions.getFieldsValue,
           clearSelectedRowKeys,
         },
-        emit,
+        emit
       );
 
       function handleTableChange(...args) {
@@ -170,22 +144,9 @@
         onChange && isFunction(onChange) && onChange.call(undefined, ...args);
       }
 
-      const {
-        getViewColumns,
-        getColumns,
-        setCacheColumnsByField,
-        setColumns,
-        getColumnsRef,
-        getCacheColumns,
-      } = useColumns(getProps, getPaginationInfo);
+      const { getViewColumns, getColumns, setCacheColumnsByField, setColumns, getColumnsRef, getCacheColumns } = useColumns(getProps, getPaginationInfo);
 
-      const { getScrollRef, redoHeight } = useTableScroll(
-        getProps,
-        tableElRef,
-        getColumnsRef,
-        getRowSelectionRef,
-        getDataSourceRef,
-      );
+      const { getScrollRef, redoHeight } = useTableScroll(getProps, tableElRef, getColumnsRef, getRowSelectionRef, getDataSourceRef);
 
       const { customRow } = useCustomRow(getProps, {
         setSelectedRowKeys,
@@ -209,15 +170,9 @@
 
       const { getHeaderProps } = useTableHeader(getProps, slots, handlers);
 
-      const { getFooterProps } = useTableFooter(
-        getProps,
-        getScrollRef,
-        tableElRef,
-        getDataSourceRef,
-      );
+      const { getFooterProps } = useTableFooter(getProps, getScrollRef, tableElRef, getDataSourceRef);
 
-      const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } =
-        useTableForm(getProps, slots, fetch, getLoading);
+      const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } = useTableForm(getProps, slots, fetch, getLoading);
 
       const getBindValues = computed(() => {
         const dataSource = unref(getDataSourceRef);

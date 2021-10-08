@@ -5,17 +5,9 @@
       {{ title }}
     </BasicTitle>
 
-    <div
-      class="flex flex-1 justify-self-stretch items-center cursor-pointer"
-      v-if="search || toolbar"
-    >
+    <div class="flex flex-1 justify-self-stretch items-center cursor-pointer" v-if="search || toolbar">
       <div :class="getInputSearchCls" v-if="search">
-        <InputSearch
-          :placeholder="t('common.searchText')"
-          size="small"
-          allowClear
-          v-model:value="searchValue"
-        />
+        <InputSearch :placeholder="t('common.searchText')" size="small" allowClear v-model:value="searchValue" />
       </div>
       <Dropdown @click.prevent v-if="toolbar">
         <Icon icon="ion:ellipsis-vertical" />
@@ -158,7 +150,7 @@
         () => searchValue.value,
         (v) => {
           debounceEmitChange(v);
-        },
+        }
       );
       watch(
         () => props.searchText,
@@ -166,7 +158,7 @@
           if (v !== searchValue.value) {
             searchValue.value = v;
           }
-        },
+        }
       );
       // function handleSearch(e: ChangeEvent): void {
       //   debounceEmitChange(e.target.value);

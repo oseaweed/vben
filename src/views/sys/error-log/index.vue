@@ -17,11 +17,7 @@
         </a-button>
       </template>
       <template #action="{ record }">
-        <TableAction
-          :actions="[
-            { label: t('sys.errorLog.tableActionDesc'), onClick: handleDetail.bind(null, record) },
-          ]"
-        />
+        <TableAction :actions="[{ label: t('sys.errorLog.tableActionDesc'), onClick: handleDetail.bind(null, record) }]" />
       </template>
     </BasicTable>
   </div>
@@ -66,7 +62,7 @@
     },
     {
       immediate: true,
-    },
+    }
   );
   const { createMessage } = useMessage();
   if (import.meta.env.DEV) {

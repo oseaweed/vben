@@ -20,20 +20,9 @@
       </Tooltip>
     </a-button-group>
 
-    <UploadModal
-      v-bind="bindValue"
-      :previewFileList="fileList"
-      @register="registerUploadModal"
-      @change="handleChange"
-      @delete="handleDelete"
-    />
+    <UploadModal v-bind="bindValue" :previewFileList="fileList" @register="registerUploadModal" @change="handleChange" @delete="handleDelete" />
 
-    <UploadPreviewModal
-      :value="fileList"
-      @register="registerPreviewModal"
-      @list-change="handlePreviewChange"
-      @delete="handlePreviewDelete"
-    />
+    <UploadPreviewModal :value="fileList" @register="registerPreviewModal" @list-change="handlePreviewChange" @delete="handlePreviewDelete" />
   </div>
 </template>
 <script lang="ts">
@@ -80,7 +69,7 @@
         (value = []) => {
           fileList.value = isArray(value) ? value : [];
         },
-        { immediate: true },
+        { immediate: true }
       );
 
       // 上传modal保存操作

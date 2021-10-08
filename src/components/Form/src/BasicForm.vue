@@ -1,11 +1,5 @@
 <template>
-  <Form
-    v-bind="getBindValue"
-    :class="getFormClass"
-    ref="formElRef"
-    :model="formModel"
-    @keypress.enter="handleEnterPress"
-  >
+  <Form v-bind="getBindValue" :class="getFormClass" ref="formElRef" :model="formModel" @keypress.enter="handleEnterPress">
     <Row v-bind="getRow">
       <slot name="formHeader"></slot>
       <template v-for="schema in getSchema" :key="schema.field">
@@ -25,10 +19,7 @@
       </template>
 
       <FormAction v-bind="getFormActionBindProps" @toggle-advanced="handleToggleAdvanced">
-        <template
-          #[item]="data"
-          v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']"
-        >
+        <template #[item]="data" v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']">
           <slot :name="item" v-bind="data || {}"></slot>
         </template>
       </FormAction>
@@ -109,9 +100,7 @@
         };
       });
 
-      const getBindValue = computed(
-        () => ({ ...attrs, ...props, ...unref(getProps) } as Recordable),
-      );
+      const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) } as Recordable));
 
       const getSchema = computed((): FormSchema[] => {
         const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
@@ -198,14 +187,14 @@
         },
         {
           immediate: true,
-        },
+        }
       );
 
       watch(
         () => unref(getProps).schemas,
         (schemas) => {
           resetSchema(schemas ?? []);
-        },
+        }
       );
 
       watch(
@@ -222,7 +211,7 @@
             initDefault();
             isInitedDefaultRef.value = true;
           }
-        },
+        }
       );
 
       async function setProps(formProps: Partial<FormProps>): Promise<void> {
@@ -283,9 +272,7 @@
         formActionType: formActionType as any,
         setFormModel,
         getFormClass,
-        getFormActionBindProps: computed(
-          (): Recordable => ({ ...getProps.value, ...advanceState }),
-        ),
+        getFormActionBindProps: computed((): Recordable => ({ ...getProps.value, ...advanceState })),
         ...formActionType,
       };
     },

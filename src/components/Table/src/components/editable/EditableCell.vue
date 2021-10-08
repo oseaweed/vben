@@ -1,10 +1,6 @@
 <template>
   <div :class="prefixCls">
-    <div
-      v-show="!isEdit"
-      :class="{ [`${prefixCls}__normal`]: true, 'ellipsis-cell': column.ellipsis }"
-      @click="handleEdit"
-    >
+    <div v-show="!isEdit" :class="{ [`${prefixCls}__normal`]: true, 'ellipsis-cell': column.ellipsis }" @click="handleEdit">
       <div class="cell-content" :title="column.ellipsis ? getValues ?? '' : ''">
         {{ getValues ? getValues : '&nbsp;' }}
       </div>
@@ -257,9 +253,7 @@
 
           if (beforeEditSubmit && isFunction(beforeEditSubmit)) {
             spinning.value = true;
-            const keys: string[] = columns
-              .map((_column) => _column.dataIndex)
-              .filter((field) => !!field) as string[];
+            const keys: string[] = columns.map((_column) => _column.dataIndex).filter((field) => !!field) as string[];
             let result: any = true;
             try {
               result = await beforeEditSubmit({
@@ -342,9 +336,7 @@
       function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
         if (props.record) {
           /* eslint-disable  */
-          isArray(props.record[cbs])
-            ? props.record[cbs]?.push(handle)
-            : (props.record[cbs] = [handle]);
+          isArray(props.record[cbs]) ? props.record[cbs]?.push(handle) : (props.record[cbs] = [handle]);
         }
       }
 

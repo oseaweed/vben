@@ -92,7 +92,7 @@
             emit('update:value', isPassing);
             emit('change', isPassing);
           }
-        },
+        }
       );
 
       watchEffect(() => {
@@ -248,19 +248,9 @@
             cls.push('to-left');
           }
           return (
-            <div
-              class={cls}
-              onMousedown={handleDragStart}
-              onTouchstart={handleDragStart}
-              style={unref(getActionStyleRef)}
-              ref={actionElRef}
-            >
+            <div class={cls} onMousedown={handleDragStart} onTouchstart={handleDragStart} style={unref(getActionStyleRef)} ref={actionElRef}>
               {getSlot(slots, 'actionIcon', isPassing) ||
-                (isPassing ? (
-                  <CheckOutlined class={`darg-verify-action__icon`} />
-                ) : (
-                  <DoubleRightOutlined class={`darg-verify-action__icon`} />
-                ))}
+                (isPassing ? <CheckOutlined class={`darg-verify-action__icon`} /> : <DoubleRightOutlined class={`darg-verify-action__icon`} />)}
             </div>
           );
         };
