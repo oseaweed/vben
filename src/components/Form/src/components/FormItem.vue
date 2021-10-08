@@ -103,7 +103,11 @@
       function getShow(): { isShow: boolean; isIfShow: boolean } {
         const { show, ifShow } = props.schema;
         const { showAdvancedButton } = props.formProps;
-        const itemIsAdvanced = showAdvancedButton ? (isBoolean(props.schema.isAdvanced) ? props.schema.isAdvanced : true) : true;
+        const itemIsAdvanced = showAdvancedButton
+          ? isBoolean(props.schema.isAdvanced)
+            ? props.schema.isAdvanced
+            : true
+          : true;
 
         let isShow = true;
         let isIfShow = true;
@@ -125,7 +129,14 @@
       }
 
       function handleRules(): ValidationRule[] {
-        const { rules: defRules = [], component, rulesMessageJoinLabel, label, dynamicRules, required } = props.schema;
+        const {
+          rules: defRules = [],
+          component,
+          rulesMessageJoinLabel,
+          label,
+          dynamicRules,
+          required,
+        } = props.schema;
 
         if (isFunction(dynamicRules)) {
           return dynamicRules(unref(getValues)) as ValidationRule[];
@@ -134,7 +145,9 @@
         let rules: ValidationRule[] = cloneDeep(defRules) as ValidationRule[];
         const { rulesMessageJoinLabel: globalRulesMessageJoinLabel } = props.formProps;
 
-        const joinLabel = Reflect.has(props.schema, 'rulesMessageJoinLabel') ? rulesMessageJoinLabel : globalRulesMessageJoinLabel;
+        const joinLabel = Reflect.has(props.schema, 'rulesMessageJoinLabel')
+          ? rulesMessageJoinLabel
+          : globalRulesMessageJoinLabel;
         const defaultMsg = createPlaceholderMessage(component) + `${joinLabel ? label : ''}`;
 
         function validator(rule: any, value: any) {
@@ -169,7 +182,9 @@
           rules = [{ required: getRequired, validator }];
         }
 
-        const requiredRuleIndex: number = rules.findIndex((rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator'));
+        const requiredRuleIndex: number = rules.findIndex(
+          (rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator'),
+        );
 
         if (requiredRuleIndex !== -1) {
           const rule = rules[requiredRuleIndex];
@@ -195,13 +210,21 @@
         // Maximum input length rule check
         const characterInx = rules.findIndex((val) => val.max);
         if (characterInx !== -1 && !rules[characterInx].validator) {
-          rules[characterInx].message = rules[characterInx].message || t('component.form.maxTip', [rules[characterInx].max] as Recordable);
+          rules[characterInx].message =
+            rules[characterInx].message ||
+            t('component.form.maxTip', [rules[characterInx].max] as Recordable);
         }
         return rules;
       }
 
       function renderComponent() {
-        const { renderComponentContent, component, field, changeEvent = 'change', valueField } = props.schema;
+        const {
+          renderComponentContent,
+          component,
+          field,
+          changeEvent = 'change',
+          valueField,
+        } = props.schema;
 
         const isCheck = component && ['Switch', 'Checkbox'].includes(component);
 
@@ -232,7 +255,8 @@
         const isCreatePlaceholder = !propsData.disabled && autoSetPlaceHolder;
         // RangePicker place is an array
         if (isCreatePlaceholder && component !== 'RangePicker' && component) {
-          propsData.placeholder = unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
+          propsData.placeholder =
+            unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
         }
         propsData.codeField = field;
         propsData.formValues = unref(getValues);
@@ -267,7 +291,9 @@
         ) : (
           label
         );
-        const getHelpMessage = isFunction(helpMessage) ? helpMessage(unref(getValues)) : helpMessage;
+        const getHelpMessage = isFunction(helpMessage)
+          ? helpMessage(unref(getValues))
+          : helpMessage;
         if (!getHelpMessage || (Array.isArray(getHelpMessage) && getHelpMessage.length === 0)) {
           return renderLabel;
         }
@@ -292,7 +318,11 @@
           );
         } else {
           const getContent = () => {
-            return slot ? getSlot(slots, slot, unref(getValues)) : render ? render(unref(getValues)) : renderComponent();
+            return slot
+              ? getSlot(slots, slot, unref(getValues))
+              : render
+              ? render(unref(getValues))
+              : renderComponent();
           };
 
           const showSuffix = !!suffix;
@@ -330,7 +360,11 @@
         const values = unref(getValues);
 
         const getContent = () => {
-          return colSlot ? getSlot(slots, colSlot, values) : renderColContent ? renderColContent(values) : renderItem();
+          return colSlot
+            ? getSlot(slots, colSlot, values)
+            : renderColContent
+            ? renderColContent(values)
+            : renderItem();
         };
 
         return (

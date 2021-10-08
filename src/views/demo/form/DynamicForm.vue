@@ -181,13 +181,14 @@
   export default defineComponent({
     components: { BasicForm, CollapseContainer, PageWrapper },
     setup() {
-      const [register, { setProps, updateSchema, appendSchemaByField, removeSchemaByFiled }] = useForm({
-        labelWidth: 120,
-        schemas,
-        actionColOptions: {
-          span: 24,
-        },
-      });
+      const [register, { setProps, updateSchema, appendSchemaByField, removeSchemaByFiled }] =
+        useForm({
+          labelWidth: 120,
+          schemas,
+          actionColOptions: {
+            span: 24,
+          },
+        });
       const [register1] = useForm({
         labelWidth: 120,
         schemas: schemas1,
@@ -224,7 +225,7 @@
               span: 8,
             },
           },
-          'field3'
+          'field3',
         );
       }
       function deleteField() {

@@ -1,6 +1,12 @@
 <template>
   <PageWrapper title="详情组件示例">
-    <Description title="基础示例" :collapseOptions="{ canExpand: true, helpMessage: 'help me' }" :column="3" :data="mockData" :schema="schema" />
+    <Description
+      title="基础示例"
+      :collapseOptions="{ canExpand: true, helpMessage: 'help me' }"
+      :column="3"
+      :data="mockData"
+      :schema="schema"
+    />
 
     <Description
       class="mt-4"

@@ -31,7 +31,8 @@
     components: { CollapseContainer, PageWrapper, [Input.name]: Input, [Alert.name]: Alert },
     setup() {
       const title = ref<string>('');
-      const { closeAll, closeLeft, closeRight, closeOther, closeCurrent, refreshPage, setTitle } = useTabs();
+      const { closeAll, closeLeft, closeRight, closeOther, closeCurrent, refreshPage, setTitle } =
+        useTabs();
       const { createMessage } = useMessage();
       function setTabTitle() {
         if (title.value) {

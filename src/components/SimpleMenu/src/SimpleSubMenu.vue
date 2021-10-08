@@ -1,5 +1,10 @@
 <template>
-  <MenuItem :name="item.path" v-if="!menuHasChildren(item) && getShowMenu" v-bind="$props" :class="getLevelClass">
+  <MenuItem
+    :name="item.path"
+    v-if="!menuHasChildren(item) && getShowMenu"
+    v-bind="$props"
+    :class="getLevelClass"
+  >
     <Icon v-if="getIcon" :icon="getIcon" :size="16" />
     <div v-if="collapsedShowTitle && getIsCollapseParent" class="mt-1 collapse-title">
       {{ getI18nName }}
@@ -11,7 +16,12 @@
       <SimpleMenuTag :item="item" :collapseParent="getIsCollapseParent" />
     </template>
   </MenuItem>
-  <SubMenu :name="item.path" v-if="menuHasChildren(item) && getShowMenu" :class="[getLevelClass, theme]" :collapsedShowTitle="collapsedShowTitle">
+  <SubMenu
+    :name="item.path"
+    v-if="menuHasChildren(item) && getShowMenu"
+    :class="[getLevelClass, theme]"
+    :collapsedShowTitle="collapsedShowTitle"
+  >
     <template #title>
       <Icon v-if="getIcon" :icon="getIcon" :size="16" />
 
@@ -80,7 +90,12 @@
       });
 
       function menuHasChildren(menuTreeItem: Menu): boolean {
-        return !menuTreeItem.meta?.hideChildrenInMenu && Reflect.has(menuTreeItem, 'children') && !!menuTreeItem.children && menuTreeItem.children.length > 0;
+        return (
+          !menuTreeItem.meta?.hideChildrenInMenu &&
+          Reflect.has(menuTreeItem, 'children') &&
+          !!menuTreeItem.children &&
+          menuTreeItem.children.length > 0
+        );
       }
 
       return {

@@ -122,7 +122,13 @@ export function createPreviewColumns(): BasicColumn[] {
   ];
 }
 
-export function createPreviewActionColumn({ handleRemove, handleDownload }: { handleRemove: Fn; handleDownload: Fn }): BasicColumn {
+export function createPreviewActionColumn({
+  handleRemove,
+  handleDownload,
+}: {
+  handleRemove: Fn;
+  handleDownload: Fn;
+}): BasicColumn {
   return {
     width: 160,
     title: t('component.upload.operating'),

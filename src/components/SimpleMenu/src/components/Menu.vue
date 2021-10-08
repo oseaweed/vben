@@ -7,7 +7,17 @@
 <script lang="ts">
   import type { PropType } from 'vue';
   import type { SubMenuProvider } from './types';
-  import { defineComponent, ref, computed, onMounted, watchEffect, watch, nextTick, getCurrentInstance, provide } from 'vue';
+  import {
+    defineComponent,
+    ref,
+    computed,
+    onMounted,
+    watchEffect,
+    watch,
+    nextTick,
+    getCurrentInstance,
+    provide,
+  } from 'vue';
 
   import { useDesign } from '/@/hooks/web/useDesign';
   import { propTypes } from '/@/utils/propTypes';
@@ -77,7 +87,7 @@
           nextTick(() => {
             updateOpened();
           });
-        }
+        },
       );
 
       function updateOpened() {

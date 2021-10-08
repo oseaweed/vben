@@ -72,7 +72,7 @@
 
       provide(
         PageWrapperFixedHeightKey,
-        computed(() => props.fixedHeight)
+        computed(() => props.fixedHeight),
       );
 
       const getIsContentFullHeight = computed(() => {
@@ -85,7 +85,7 @@
         wrapperRef,
         [headerRef, footerRef],
         [contentRef],
-        getUpwardSpace
+        getUpwardSpace,
       );
       setCompensation({ useLayoutFooter: true, elements: [footerRef] });
 
@@ -138,7 +138,7 @@
         {
           flush: 'post',
           immediate: true,
-        }
+        },
       );
 
       return {

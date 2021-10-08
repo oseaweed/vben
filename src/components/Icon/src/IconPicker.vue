@@ -1,10 +1,25 @@
 <template>
-  <a-input disabled :style="{ width }" :placeholder="t('component.icon.placeholder')" :class="prefixCls" v-model:value="currentSelect">
+  <a-input
+    disabled
+    :style="{ width }"
+    :placeholder="t('component.icon.placeholder')"
+    :class="prefixCls"
+    v-model:value="currentSelect"
+  >
     <template #addonAfter>
-      <a-popover placement="bottomLeft" trigger="click" v-model="visible" :overlayClassName="`${prefixCls}-popover`">
+      <a-popover
+        placement="bottomLeft"
+        trigger="click"
+        v-model="visible"
+        :overlayClassName="`${prefixCls}-popover`"
+      >
         <template #title>
           <div class="flex justify-between">
-            <a-input :placeholder="t('component.icon.search')" @change="debounceHandleSearchChange" allowClear />
+            <a-input
+              :placeholder="t('component.icon.search')"
+              @change="debounceHandleSearchChange"
+              allowClear
+            />
           </div>
         </template>
 
@@ -16,7 +31,18 @@
                   v-for="icon in getPaginationList"
                   :key="icon"
                   :class="currentSelect === icon ? 'border border-primary' : ''"
-                  class="p-2 w-1/8 cursor-pointer mr-1 mt-1 flex justify-center items-center border border-solid hover:border-primary"
+                  class="
+                    p-2
+                    w-1/8
+                    cursor-pointer
+                    mr-1
+                    mt-1
+                    flex
+                    justify-center
+                    items-center
+                    border border-solid
+                    hover:border-primary
+                  "
                   @click="handleClick(icon)"
                   :title="icon"
                 >
@@ -27,7 +53,13 @@
               </ul>
             </ScrollContainer>
             <div class="flex py-2 items-center justify-center" v-if="getTotal >= pageSize">
-              <a-pagination showLessItems size="small" :pageSize="pageSize" :total="getTotal" @change="handlePageChange" />
+              <a-pagination
+                showLessItems
+                size="small"
+                :pageSize="pageSize"
+                :total="getTotal"
+                @change="handlePageChange"
+              />
             </div>
           </div>
           <template v-else
@@ -106,7 +138,10 @@
   const { clipboardRef, isSuccessRef } = useCopyToClipboard(props.value);
   const { createMessage } = useMessage();
 
-  const { getPaginationList, getTotal, setCurrentPage } = usePagination(currentList, props.pageSize);
+  const { getPaginationList, getTotal, setCurrentPage } = usePagination(
+    currentList,
+    props.pageSize,
+  );
 
   watchEffect(() => {
     currentSelect.value = props.value;
@@ -117,7 +152,7 @@
     (v) => {
       emit('update:value', v);
       return emit('change', v);
-    }
+    },
   );
 
   function handlePageChange(page: number) {

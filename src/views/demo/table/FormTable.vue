@@ -1,5 +1,8 @@
 <template>
-  <BasicTable @register="registerTable" :rowSelection="{ type: 'checkbox', selectedRowKeys: checkedKeys, onChange: onSelectChange }">
+  <BasicTable
+    @register="registerTable"
+    :rowSelection="{ type: 'checkbox', selectedRowKeys: checkedKeys, onChange: onSelectChange }"
+  >
     <template #form-custom> custom-slot </template>
     <template #headerTop>
       <a-alert type="info" show-icon>

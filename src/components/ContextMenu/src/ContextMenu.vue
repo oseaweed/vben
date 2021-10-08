@@ -31,7 +31,11 @@
   const ItemContent: FunctionalComponent<ItemContentProps> = (props) => {
     const { item } = props;
     return (
-      <span style="display: inline-block; width: 100%; " class="px-4" onClick={props.handler.bind(null, item)}>
+      <span
+        style="display: inline-block; width: 100%; "
+        class="px-4"
+        onClick={props.handler.bind(null, item)}
+      >
         {props.showIcon && item.icon && <Icon class="mr-2" icon={item.icon} />}
         <span>{item.label}</span>
       </span>
@@ -120,7 +124,13 @@
         }
         const { items } = props;
         return (
-          <Menu inlineIndent={12} mode="vertical" class={prefixCls} ref={wrapRef} style={unref(getStyle)}>
+          <Menu
+            inlineIndent={12}
+            mode="vertical"
+            class={prefixCls}
+            ref={wrapRef}
+            style={unref(getStyle)}
+          >
             {renderMenuItem(items)}
           </Menu>
         );
@@ -170,7 +180,8 @@
     background-color: @component-background;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 0.25rem;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.1),
+      0 1px 5px 0 rgba(0, 0, 0, 0.06);
     background-clip: padding-box;
     user-select: none;
 

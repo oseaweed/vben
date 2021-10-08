@@ -8,7 +8,12 @@
     @select="handleSelect"
   >
     <template v-for="item in items" :key="item.path">
-      <SimpleSubMenu :item="item" :parent="true" :collapsedShowTitle="collapsedShowTitle" :collapse="collapse" />
+      <SimpleSubMenu
+        :item="item"
+        :parent="true"
+        :collapsedShowTitle="collapsedShowTitle"
+        :collapse="collapse"
+      />
     </template>
   </Menu>
 </template>
@@ -65,7 +70,13 @@
       const { prefixCls } = useDesign('simple-menu');
       const { items, accordion, mixSider, collapse } = toRefs(props);
 
-      const { setOpenKeys, getOpenKeys } = useOpenKeys(menuState, items, accordion, mixSider, collapse);
+      const { setOpenKeys, getOpenKeys } = useOpenKeys(
+        menuState,
+        items,
+        accordion,
+        mixSider,
+        collapse,
+      );
 
       const getBindValues = computed(() => ({ ...attrs, ...props }));
 
@@ -78,7 +89,7 @@
             setOpenKeys(currentRoute.value.path);
           }
         },
-        { immediate: true }
+        { immediate: true },
       );
 
       watch(
@@ -89,7 +100,7 @@
           }
           setOpenKeys(currentRoute.value.path);
         },
-        { flush: 'post' }
+        { flush: 'post' },
       );
 
       listenerRouteChange((route) => {

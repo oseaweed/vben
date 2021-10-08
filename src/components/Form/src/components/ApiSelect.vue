@@ -1,5 +1,11 @@
 <template>
-  <Select @dropdownVisibleChange="handleFetch" v-bind="$attrs" @change="handleChange" :options="getOptions" v-model:value="state">
+  <Select
+    @dropdownVisibleChange="handleFetch"
+    v-bind="$attrs"
+    @change="handleChange"
+    :options="getOptions"
+    v-model:value="state"
+  >
     <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data || {}"></slot>
     </template>
@@ -89,7 +95,7 @@
         () => {
           !unref(isFirstLoad) && fetch();
         },
-        { deep: true }
+        { deep: true },
       );
 
       async function fetch() {

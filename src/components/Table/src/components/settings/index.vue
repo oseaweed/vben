@@ -2,7 +2,11 @@
   <div class="table-settings">
     <RedoSetting v-if="getSetting.redo" :getPopupContainer="getTableContainer" />
     <SizeSetting v-if="getSetting.size" :getPopupContainer="getTableContainer" />
-    <ColumnSetting v-if="getSetting.setting" @columns-change="handleColumnChange" :getPopupContainer="getTableContainer" />
+    <ColumnSetting
+      v-if="getSetting.setting"
+      @columns-change="handleColumnChange"
+      :getPopupContainer="getTableContainer"
+    />
     <FullScreenSetting v-if="getSetting.fullScreen" :getPopupContainer="getTableContainer" />
   </div>
 </template>

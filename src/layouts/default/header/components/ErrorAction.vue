@@ -1,5 +1,10 @@
 <template>
-  <Tooltip :title="t('layout.header.tooltipErrorLog')" placement="bottom" :mouseEnterDelay="0.5" @click="handleToErrorList">
+  <Tooltip
+    :title="t('layout.header.tooltipErrorLog')"
+    placement="bottom"
+    :mouseEnterDelay="0.5"
+    @click="handleToErrorList"
+  >
     <Badge :count="getCount" :offset="[0, 10]" :overflowCount="99">
       <Icon icon="ion:bug-outline" />
     </Badge>

@@ -1,5 +1,12 @@
 <template>
-  <BasicModal width="800px" :title="t('component.upload.preview')" wrapClassName="upload-preview-modal" v-bind="$attrs" @register="register" :showOkBtn="false">
+  <BasicModal
+    width="800px"
+    :title="t('component.upload.preview')"
+    wrapClassName="upload-preview-modal"
+    v-bind="$attrs"
+    @register="register"
+    :showOkBtn="false"
+  >
     <FileList :dataSource="fileListRef" :columns="columns" :actionColumn="actionColumn" />
   </BasicModal>
 </template>
@@ -38,7 +45,7 @@
               };
             });
         },
-        { immediate: true }
+        { immediate: true },
       );
 
       // 删除
@@ -49,7 +56,7 @@
           emit('delete', removed[0].url);
           emit(
             'list-change',
-            fileListRef.value.map((item) => item.url)
+            fileListRef.value.map((item) => item.url),
           );
         }
       }

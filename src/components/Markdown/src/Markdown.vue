@@ -3,7 +3,16 @@
 </template>
 <script lang="ts">
   import type { Ref } from 'vue';
-  import { defineComponent, ref, unref, nextTick, computed, watch, onBeforeUnmount, onDeactivated } from 'vue';
+  import {
+    defineComponent,
+    ref,
+    unref,
+    nextTick,
+    computed,
+    watch,
+    onBeforeUnmount,
+    onDeactivated,
+  } from 'vue';
   import Vditor from 'vditor';
   import 'vditor/dist/index.css';
   import { useLocale } from '/@/locales/useLocale';
@@ -43,7 +52,7 @@
         {
           immediate: true,
           flush: 'post',
-        }
+        },
       );
 
       watch(
@@ -53,7 +62,7 @@
             instance.getVditor()?.setValue(v);
           }
           valueRef.value = v;
-        }
+        },
       );
 
       const getCurrentLang = computed((): 'zh_CN' | 'en_US' | 'ja_JP' | 'ko_KR' => {

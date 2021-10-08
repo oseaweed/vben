@@ -1,7 +1,18 @@
 <script lang="tsx">
   import type { ReplaceFields, Keys, CheckKeys, TreeActionType, TreeItem } from './typing';
 
-  import { defineComponent, reactive, computed, unref, ref, watchEffect, toRaw, watch, CSSProperties, onMounted } from 'vue';
+  import {
+    defineComponent,
+    reactive,
+    computed,
+    unref,
+    ref,
+    watchEffect,
+    toRaw,
+    watch,
+    CSSProperties,
+    onMounted,
+  } from 'vue';
   import { Tree, Empty } from 'ant-design-vue';
   import { TreeIcon } from './TreeIcon';
   import TreeHeader from './TreeHeader.vue';
@@ -31,7 +42,14 @@
     name: 'BasicTree',
     inheritAttrs: false,
     props: basicProps,
-    emits: ['update:expandedKeys', 'update:selectedKeys', 'update:value', 'change', 'check', 'update:searchValue'],
+    emits: [
+      'update:expandedKeys',
+      'update:selectedKeys',
+      'update:value',
+      'change',
+      'check',
+      'update:searchValue',
+    ],
     setup(props, { attrs, slots, emit, expose }) {
       const state = reactive<State>({
         checkStrictly: props.checkStrictly,
@@ -101,16 +119,24 @@
         return omit(propsData, 'treeData', 'class');
       });
 
-      const getTreeData = computed((): TreeItem[] => (searchState.startSearch ? searchState.searchData : unref(treeDataRef)));
+      const getTreeData = computed((): TreeItem[] =>
+        searchState.startSearch ? searchState.searchData : unref(treeDataRef),
+      );
 
       const getNotFound = computed((): boolean => {
         return !getTreeData.value || getTreeData.value.length === 0;
       });
 
-      const { deleteNodeByKey, insertNodeByKey, insertNodesByKey, filterByLevel, updateNodeByKey, getAllKeys, getChildrenKeys, getEnabledKeys } = useTree(
-        treeDataRef,
-        getReplaceFields
-      );
+      const {
+        deleteNodeByKey,
+        insertNodeByKey,
+        insertNodesByKey,
+        filterByLevel,
+        updateNodeByKey,
+        getAllKeys,
+        getChildrenKeys,
+        getEnabledKeys,
+      } = useTree(treeDataRef, getReplaceFields);
 
       function getIcon(params: Recordable, icon?: string) {
         if (!icon) {
@@ -183,7 +209,7 @@
         },
         {
           immediate: true,
-        }
+        },
       );
 
       watch(
@@ -192,7 +218,7 @@
           if (val) {
             handleSearch(searchState.searchText);
           }
-        }
+        },
       );
 
       function handleSearch(searchValue: string) {
@@ -202,7 +228,8 @@
           searchState.startSearch = false;
           return;
         }
-        const { filterFn, checkable, expandOnSearch, checkOnSearch, selectedOnSearch } = unref(props);
+        const { filterFn, checkable, expandOnSearch, checkOnSearch, selectedOnSearch } =
+          unref(props);
         searchState.startSearch = true;
         const { title: titleField, key: keyField } = unref(getReplaceFields);
 
@@ -210,13 +237,15 @@
         searchState.searchData = filter(
           unref(treeDataRef),
           (node) => {
-            const result = filterFn ? filterFn(searchValue, node, unref(getReplaceFields)) : node[titleField]?.includes(searchValue) ?? false;
+            const result = filterFn
+              ? filterFn(searchValue, node, unref(getReplaceFields))
+              : node[titleField]?.includes(searchValue) ?? false;
             if (result) {
               matchedKeys.push(node[keyField]);
             }
             return result;
           },
-          unref(getReplaceFields)
+          unref(getReplaceFields),
         );
 
         if (expandOnSearch) {
@@ -280,7 +309,7 @@
         () => props.value,
         () => {
           state.checkedKeys = toRaw(props.value || []);
-        }
+        },
       );
 
       watch(
@@ -289,7 +318,7 @@
           const v = toRaw(state.checkedKeys);
           emit('update:value', v);
           emit('change', v);
-        }
+        },
       );
 
       // watchEffect(() => {
@@ -359,7 +388,11 @@
         const searchText = searchState.searchText;
         const { highlight } = unref(props);
         return data.map((item) => {
-          const { title: titleField, key: keyField, children: childrenField } = unref(getReplaceFields);
+          const {
+            title: titleField,
+            key: keyField,
+            children: childrenField,
+          } = unref(getReplaceFields);
 
           const propsData = omit(item, 'title');
           const icon = getIcon({ ...item, level }, item.icon);
@@ -367,7 +400,8 @@
           const title = get(item, titleField);
 
           const searchIdx = title.indexOf(searchText);
-          const isHighlight = searchState.startSearch && !isEmpty(searchText) && highlight && searchIdx !== -1;
+          const isHighlight =
+            searchState.startSearch && !isEmpty(searchText) && highlight && searchIdx !== -1;
           const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`;
 
           const titleDom = isHighlight ? (
@@ -384,7 +418,10 @@
             <Tree.TreeNode {...propsData} node={toRaw(item)} key={get(item, keyField)}>
               {{
                 title: () => (
-                  <span class={`${prefixCls}-title pl-2`} onClick={handleClickNode.bind(null, item[keyField], item[childrenField])}>
+                  <span
+                    class={`${prefixCls}-title pl-2`}
+                    onClick={handleClickNode.bind(null, item[keyField], item[childrenField])}
+                  >
                     {item.slots?.title ? (
                       getSlot(slots, item.slots?.title, item)
                     ) : (
@@ -392,7 +429,9 @@
                         {icon && <TreeIcon icon={icon} />}
                         {titleDom}
                         {/*{get(item, titleField)}*/}
-                        <span class={`${prefixCls}__actions`}>{renderAction({ ...item, level })}</span>
+                        <span class={`${prefixCls}__actions`}>
+                          {renderAction({ ...item, level })}
+                        </span>
                       </>
                     )}
                   </span>
