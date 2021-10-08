@@ -6,6 +6,14 @@ import { cloneDeep, omit } from 'lodash-es';
 import { warn } from '/@/utils/log';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+const modules = import.meta.globEager('../routes/modules/**/*.ts');
+const menuModules: AppRouteModule[] = [];
+Object.keys(modules).forEach((key) => {
+  const mod = modules[key].default || {};
+  const modList = Array.isArray(mod) ? [...mod] : [mod];
+  menuModules.push(...modList);
+});
+
 export type LayoutMapKey = 'LAYOUT';
 const IFRAME = () => import('/@/views/sys/iframe/FrameBlank.vue');
 
@@ -73,7 +81,8 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
     const component = route.component as string;
     if (component) {
       if (component.toUpperCase() === 'LAYOUT') {
-        route.component = LayoutMap.get(component.toUpperCase());
+        // route.component = LayoutMap.get(component.toUpperCase());
+        route.component = LayoutMap.get((route.component as string).toUpperCase() as LayoutMapKey);
       } else {
         route.children = [cloneDeep(route)];
         route.component = LAYOUT;
@@ -88,6 +97,12 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
       warn('请正确配置路由：' + route?.name + '的component属性');
     }
     route.children && asyncImportRoute(route.children);
+  });
+  // 合并无权限菜单
+  routeList = [...routeList, ...menuModules];
+
+  routeList.sort((a, b) => {
+    return (a.orderNo || 0) - (b.orderNo || 0);
   });
   return routeList as unknown as T[];
 }

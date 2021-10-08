@@ -42,3 +42,8 @@ export interface GetUserInfoModel {
   // 介绍
   desc?: string;
 }
+export interface UpdatePasswordParmas {
+  oldPassword: string;
+  newPassword: string;
+  newPassword1: string;
+}

@@ -1,41 +1,19 @@
 <template>
   <LoginFormTitle v-show="getShow" class="enter-x" />
-  haode 
-  <Form
-    class="p-4 enter-x"
-    :model="formData"
-    :rules="getFormRules"
-    ref="formRef"
-    v-show="getShow"
-    @keypress.enter="handleLogin"
-  >
+  <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef" v-show="getShow" @keypress.enter="handleLogin">
     <FormItem name="account" class="enter-x">
-      <Input
-        size="large"
-        v-model:value="formData.account"
-        :placeholder="t('sys.login.userName')"
-        class="fix-auto-fill"
-      />
+      <Input size="large" v-model:value="formData.account" :placeholder="t('sys.login.userName')" class="fix-auto-fill" />
     </FormItem>
     <FormItem name="password" class="enter-x">
-      <InputPassword
-        size="large"
-        visibilityToggle
-        v-model:value="formData.password"
-        :placeholder="t('sys.login.password')"
-      />
+      <InputPassword size="large" visibilityToggle v-model:value="formData.password" :placeholder="t('sys.login.password')" />
     </FormItem>
-    <FormItem name="code" class="enter-x enter-code">
+    <FormItem name="code" class="relative enter-x enter-code">
       <Input size="large" v-model:value="formData.code" placeholder="请输入验证码" />
-      <img
-        style="position: absolute; top: -10px; right: 1px; height: 37px"
-        :src="captchaInfo.image"
-        @click="handleVerificationCode"
-      />
+      <img style="position: absolute; top: 1px; right: 1px; height: 36px" :src="captchaInfo.image" @click="handleVerificationCode" />
     </FormItem>
     <ARow class="enter-x">
       <ACol :span="12">
-        <FormItem>
+        <FormItem v-show="showRadioGroup">
           <a-radio-group name="radioGroup" v-model:value="loginType">
             <a-radio value="1">系统登录</a-radio>
             <a-radio value="2">域登陆</a-radio>
@@ -64,7 +42,7 @@
         {{ t('sys.login.registerButton') }}
       </Button> -->
     </FormItem>
-    <ARow class="enter-x">
+    <!-- <ARow class="enter-x">
       <ACol :md="8" :xs="24">
         <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
           {{ t('sys.login.mobileSignInFormTitle') }}
@@ -80,15 +58,15 @@
           {{ t('sys.login.registerButton') }}
         </Button>
       </ACol>
-    </ARow>
+    </ARow> -->
 
-    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
+    <!-- <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider> -->
   </Form>
 </template>
 <script lang="ts" setup>
   import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
 
-  import { Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
+  import { Form, Input, Row, Col, Button } from 'ant-design-vue';
 
   import LoginFormTitle from './LoginFormTitle.vue';
 
@@ -176,6 +154,7 @@
   }
 
   const showRadioGroup = loginConfig == 3;
+  console.log(loginConfig);
   const loginType = ref(showRadioGroup ? '2' : '1');
   onMounted(() => {
     handleVerificationCode();

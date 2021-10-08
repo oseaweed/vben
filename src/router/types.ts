@@ -9,6 +9,7 @@ export type Component<T extends any = any> =
 
 // @ts-ignore
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
+  orderNo?: number;
   name: string;
   meta: RouteMeta;
   component?: Component | string;
@@ -16,6 +17,8 @@ export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   children?: AppRouteRecordRaw[];
   props?: Recordable;
   fullPath?: string;
+  hide?: boolean;
+  source?: string;
 }
 
 export interface MenuTag {

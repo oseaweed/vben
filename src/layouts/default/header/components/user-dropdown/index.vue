@@ -1,10 +1,10 @@
 <template>
   <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
+      <img :class="`${prefixCls}__header`" :src="headerImg" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
-          {{ getUserInfo.realName }}
+          {{ getUserInfo.userName }}
         </span>
       </span>
     </span>
@@ -17,7 +17,8 @@
           icon="ion:document-text-outline"
           v-if="getShowDoc"
         />
-        <MenuDivider v-if="getShowDoc" />
+        <MenuItem key="password" text="修改密码" icon="ant-design:security-scan-outlined" />
+        <MenuDivider />
         <MenuItem
           v-if="getUseLockPage"
           key="lock"
@@ -33,6 +34,7 @@
     </template>
   </Dropdown>
   <LockAction @register="register" />
+  <PasswordAction @register="passwordRegister" />
 </template>
 <script lang="ts">
   // components
@@ -54,7 +56,7 @@
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'doc' | 'lock' | 'password';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -64,6 +66,7 @@
       MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
       MenuDivider: Menu.Divider,
       LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
+      PasswordAction: createAsyncComponent(() => import('../personal/UpdatePasswordModal.vue')),
     },
     props: {
       theme: propTypes.oneOf(['dark', 'light']),
@@ -75,8 +78,8 @@
       const userStore = useUserStore();
 
       const getUserInfo = computed(() => {
-        const { realName = '', avatar, desc } = userStore.getUserInfo || {};
-        return { realName, avatar: avatar || headerImg, desc };
+        const { userName = '' } = userStore.getUserInfo || {};
+        return { userName };
       });
 
       const [register, { openModal }] = useModal();
@@ -95,6 +98,13 @@
         openWindow(DOC_URL);
       }
 
+      // 修改密码
+      const [passwordRegister, { openModal: openPasswordModal }] = useModal();
+
+      function changePassword() {
+        openPasswordModal(true);
+      }
+
       function handleMenuClick(e: { key: MenuEvent }) {
         switch (e.key) {
           case 'logout':
@@ -105,6 +115,9 @@
             break;
           case 'lock':
             handleLock();
+            break;
+          case 'password':
+            changePassword();
             break;
         }
       }
@@ -117,6 +130,8 @@
         getShowDoc,
         register,
         getUseLockPage,
+        passwordRegister,
+        headerImg,
       };
     },
   });

@@ -1,5 +1,10 @@
 import { defHttp } from '/@/utils/http/axios';
-import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
+import {
+  LoginParams,
+  LoginResultModel,
+  GetUserInfoModel,
+  UpdatePasswordParmas,
+} from './model/userModel';
 
 import { ErrorMessageMode } from '/#/axios';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
@@ -11,6 +16,7 @@ enum Api {
   GetPermCode = '/getPermCode',
   DomainLogin = '/risk-control/adToken', //域登录
   GetCaptcha = '/blade-auth/captcha',
+  UpdatePassword = '/blade-user/update-password',
 }
 
 /**
@@ -75,4 +81,18 @@ export function getCaptchaCode() {
   return defHttp.get<{ key: string; image: string }>({
     url: Api.GetCaptcha,
   });
+}
+/**
+ * @description 修改密码
+ */
+export function updatePassword(params: UpdatePasswordParmas) {
+  return defHttp.post<LoginResultModel>(
+    {
+      url: Api.UpdatePassword,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
 }

@@ -55,7 +55,7 @@ const transform: AxiosTransform = {
     if (responseType && responseType == 'blob') {
       return data;
     }
-    // 这里逻辑可以根据项目进行修改
+    // // 这里逻辑可以根据项目进行修改
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
     if (hasSuccess) {
       return result;
@@ -72,17 +72,21 @@ const transform: AxiosTransform = {
         userStore.logout(true);
         break;
       default:
-        if (message) {
-          timeoutMsg = message;
+        if (msg) {
+          timeoutMsg = msg;
         }
     }
 
     // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
     // errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
-    if (options.errorMessageMode === 'modal') {
-      createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
-    } else if (options.errorMessageMode === 'message') {
-      createMessage.error(timeoutMsg);
+    if (success === false || code !== ResultEnum.SUCCESS) {
+      if (options.errorMessageMode === 'modal') {
+        createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
+      } else if (options.errorMessageMode === 'message') {
+        createMessage.error(timeoutMsg);
+      }
+      Promise.reject(new Error(msg));
+      throw new Error(t('sys.api.apiRequestFailed'));
     }
 
     throw new Error(timeoutMsg || t('sys.api.apiRequestFailed'));
@@ -145,8 +149,8 @@ const transform: AxiosTransform = {
     const token = getToken();
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
-      config.headers.Authorization = options.authenticationScheme
-        ? `${options.authenticationScheme} ${token}`
+      config.headers['Blade-Auth'] = options.bladeAuthScheme
+        ? `${options.bladeAuthScheme} ${token}`
         : token;
     }
     return config;
@@ -204,7 +208,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // authentication schemes，e.g: Bearer
         // authenticationScheme: 'Bearer',
-        authenticationScheme: 'Bearer',
+        bladeAuthScheme: 'bearer',
         timeout: 10 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,

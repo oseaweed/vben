@@ -18,11 +18,13 @@ import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 
 import { filter } from '/@/utils/helper/treeHelper';
 
-import { getMenuList } from '/@/api/sys/menu';
+import { getMenuListById } from '/@/api/system/menu';
 import { getPermCode } from '/@/api/sys/user';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 import { PageEnum } from '/@/enums/pageEnum';
+import { MenuInfo } from '/@/api/system/model/menuModel';
+import { useGlobSetting } from '/@/hooks/setting';
 
 interface PermissionState {
   // Permission code list
@@ -183,12 +185,33 @@ export const usePermissionStore = defineStore({
           // !Simulate to obtain permission codes from the background,
           // this function may only need to be executed once, and the actual project can be put at the right time by itself
           let routeList: AppRouteRecordRaw[] = [];
-          try {
-            this.changePermissionCode();
-            routeList = (await getMenuList()) as AppRouteRecordRaw[];
-          } catch (error) {
-            console.error(error);
-          }
+          // try {
+          //   this.changePermissionCode();
+          //   routeList = (await getMenuList()) as AppRouteRecordRaw[];
+          // } catch (error) {
+          //   console.error(error);
+          // }
+          const { menuPage } = useGlobSetting();
+          const routeApiList = (await getMenuListById()) as MenuInfo[];
+          const showMenuPage = menuPage == 'true';
+          const mapTree = (item: MenuInfo) => {
+            const haveChildren = Array.isArray(item.children) && item.children.length > 0;
+
+            return {
+              component: item.alias,
+              path: item.path,
+              redirect: item.remark,
+              meta: {
+                icon: item.source,
+                title: item.name,
+                hideMenu: !showMenuPage && item.code == 'MenuManagement',
+              },
+              orderNo: item.sort,
+              name: item.code,
+              children: haveChildren ? item.children.map((i) => mapTree(i)) : [],
+            };
+          };
+          routeList = (routeApiList.length && routeApiList.map((item) => mapTree(item))) || [];
 
           // Dynamically introduce components
           routeList = transformObjToRoute(routeList);
