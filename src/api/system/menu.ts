@@ -45,7 +45,7 @@ export const removeMenuByIds = (params: { ids: string }) => {
     },
     {
       joinParamsToUrl: true,
-    }
+    },
   );
 };
 

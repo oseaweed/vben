@@ -36,6 +36,6 @@ export const removePackByIds = (params: { ids: string }) => {
     },
     {
       joinParamsToUrl: true,
-    }
+    },
   );
 };

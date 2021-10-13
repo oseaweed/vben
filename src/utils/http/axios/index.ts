@@ -109,10 +109,13 @@ const transform: AxiosTransform = {
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
-        config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
+        // config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
+        config.params = Object.assign(params || {});
       } else {
         // 兼容restful风格
-        config.url = config.url + params + `${joinTimestamp(joinTime, true)}`;
+        // config.url = config.url + params + `${joinTimestamp(joinTime, true)}`;
+        config.url = config.url + params;
+
         config.params = undefined;
       }
     } else {

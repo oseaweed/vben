@@ -54,7 +54,7 @@ export const removeStationById = (params: { ids: string }) => {
     },
     {
       joinParamsToUrl: true,
-    }
+    },
   );
 };
 
@@ -66,6 +66,6 @@ export const updateParent = (params: { parentId: string; ids: string }) => {
     },
     {
       joinParamsToUrl: true,
-    }
+    },
   );
 };

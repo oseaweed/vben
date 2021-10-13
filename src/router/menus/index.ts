@@ -1,4 +1,4 @@
-import type { Menu, MenuModule } from '/@/router/types';
+import type { Menu, MenuModule, AppRouteModule } from '/@/router/types';
 import type { RouteRecordNormalized } from 'vue-router';
 
 import { useAppStoreWithOut } from '/@/store/modules/app';
@@ -10,14 +10,53 @@ import { router } from '/@/router';
 import { PermissionModeEnum } from '/@/enums/appEnum';
 import { pathToRegexp } from 'path-to-regexp';
 
-const modules = import.meta.globEager('./modules/**/*.ts');
+// const modules = import.meta.globEager('./modules/**/*.ts');
+const modules = import.meta.globEager('../routes/modules/**/*.ts');
 
 const menuModules: MenuModule[] = [];
+const menuFactory = (sourceChildren: Menu[], routes: AppRouteModule[]) => {
+  routes.forEach((item) => {
+    if (item.hide) return;
+    const menuItem: Menu = {
+      name: item.meta?.title,
+      path: item.path,
+    };
+    if (item.children) {
+      const children: Menu[] = [];
+      menuFactory(children, item.children);
+      menuItem.children = children;
+    }
+    sourceChildren.push(menuItem);
+  });
+};
 
+// Object.keys(modules).forEach((key) => {
+//   const mod = modules[key].default || {};
+//   const modList = Array.isArray(mod) ? [...mod] : [mod];
+//   menuModules.push(...modList);
+// });
 Object.keys(modules).forEach((key) => {
-  const mod = modules[key].default || {};
-  const modList = Array.isArray(mod) ? [...mod] : [mod];
-  menuModules.push(...modList);
+  const mod: AppRouteModule = modules[key].default || {};
+  if (mod.hide) return;
+  const menuItem: Menu = {
+    name: mod.meta?.title,
+    path: mod.path,
+  };
+  if (mod.children) {
+    if (mod.children.length === 1 && mod.children[0].path === 'index') {
+      menuItem.path += `/${mod.children[0].path}`;
+      menuItem.name = mod.children[0].meta?.title;
+    } else {
+      const children: Menu[] = [];
+      menuFactory(children, mod.children);
+      menuItem.children = children;
+    }
+  }
+  const menuModuleItme: MenuModule = {
+    orderNo: mod.orderNo,
+    menu: menuItem,
+  };
+  menuModules.push(menuModuleItme);
 });
 
 // ===========================
@@ -54,7 +93,8 @@ const staticMenus: Menu[] = [];
 async function getAsyncMenus() {
   const permissionStore = usePermissionStore();
   if (isBackMode()) {
-    return permissionStore.getBackMenuList.filter((item) => !item.meta?.hideMenu && !item.hideMenu);
+    // return permissionStore.getBackMenuList.filter((item) => !item.meta?.hideMenu && !item.hideMenu);
+    return permissionStore.getBackMenuList;
   }
   if (isRouteMappingMode()) {
     return permissionStore.getFrontMenuList.filter((item) => !item.hideMenu);

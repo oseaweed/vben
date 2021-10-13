@@ -464,6 +464,7 @@
                 {extendSlots(slots)}
               </TreeHeader>
             )}
+            {getSlot(slots, 'expandContent')}
             <ScrollContainer style={scrollStyle} v-show={!unref(getNotFound)}>
               <Tree {...unref(getBindValues)} showIcon={false}>
                 {{

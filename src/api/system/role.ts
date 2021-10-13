@@ -59,6 +59,6 @@ export const removeRoleByIds = (params: { ids: string }) => {
     },
     {
       joinParamsToUrl: true,
-    }
+    },
   );
 };

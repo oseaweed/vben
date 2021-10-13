@@ -46,7 +46,7 @@ export const removeAccountByIds = (params: { ids: string }) => {
     },
     {
       joinParamsToUrl: true,
-    }
+    },
   );
 };
 
@@ -58,6 +58,6 @@ export const resetPasswordByIds = (params: { userIds: string }) => {
     },
     {
       joinParamsToUrl: true,
-    }
+    },
   );
 };

@@ -89,3 +89,11 @@ export const withInstall = <T>(component: T, alias?: string) => {
   };
   return component as T & Plugin;
 };
+
+export function recursiveHandle<T>(temp: T | Array<T>, childrenKey = 'children', func?: Function) {
+  const list = isObject(temp) ? [temp] : temp;
+  list.forEach((item) => {
+    func && func(item);
+    if (item[childrenKey]) recursiveHandle(item[childrenKey], childrenKey, func);
+  });
+}
