@@ -1,4 +1,5 @@
 import { defHttp } from '/@/utils/http/axios';
+<<<<<<< HEAD
 import {
   LoginParams,
   LoginResultModel,
@@ -17,16 +18,32 @@ enum Api {
   DomainLogin = '/risk-control/adToken', //域登录
   GetCaptcha = '/blade-auth/captcha',
   UpdatePassword = '/blade-user/update-password',
+=======
+import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
+
+import { ErrorMessageMode } from '/#/axios';
+
+enum Api {
+  Login = '/login',
+  Logout = '/logout',
+  GetUserInfo = '/getUserInfo',
+  GetPermCode = '/getPermCode',
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 }
 
 /**
  * @description: user login api
  */
+<<<<<<< HEAD
 export function loginApi({ key, code, ...params }: LoginParams, mode: ErrorMessageMode = 'modal') {
+=======
+export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   return defHttp.post<LoginResultModel>(
     {
       url: Api.Login,
       params,
+<<<<<<< HEAD
       headers: {
         'Captcha-Key': key,
         'Captcha-Code': code,
@@ -54,12 +71,18 @@ export function domainLoginApi(
         'Captcha-Code': code,
         'Content-Type': ContentTypeEnum.FORM_URLENCODED,
       },
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     },
     {
       errorMessageMode: mode,
     },
   );
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 /**
  * @description: getUserInfo
  */
@@ -74,6 +97,7 @@ export function getPermCode() {
 export function doLogout() {
   return defHttp.get({ url: Api.Logout });
 }
+<<<<<<< HEAD
 /**
  * @description: 获取验证码
  */
@@ -96,3 +120,5 @@ export function updatePassword(params: UpdatePasswordParmas) {
     },
   );
 }
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb

@@ -5,7 +5,11 @@ import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { RequestOptions, Result } from '/#/axios';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
+<<<<<<< HEAD
   bladeAuthScheme?: string;
+=======
+  authenticationScheme?: string;
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   transform?: AxiosTransform;
   requestOptions?: RequestOptions;
 }

@@ -34,6 +34,17 @@ export const basicProps = {
     default: null,
     required: true,
   },
+<<<<<<< HEAD
+=======
+  name: {
+    type: String as PropType<string>,
+    default: 'file',
+  },
+  filename: {
+    type: String as PropType<string>,
+    default: null,
+  },
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 };
 
 export const uploadContainerProps = {

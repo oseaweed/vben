@@ -87,6 +87,10 @@
       font-size: 16px;
       font-weight: 700;
       transition: all 0.5s;
+<<<<<<< HEAD
+=======
+      line-height: normal;
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     }
   }
 </style>

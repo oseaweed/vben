@@ -44,7 +44,11 @@
       watch(
         () => props.params,
         () => {
+<<<<<<< HEAD
           isFirstLoaded.value && fetch();
+=======
+          !unref(isFirstLoaded) && fetch();
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         },
         { deep: true },
       );

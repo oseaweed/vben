@@ -7,13 +7,21 @@ import { PageEnum } from '/@/enums/pageEnum';
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
+<<<<<<< HEAD
 import { loginApi, domainLoginApi } from '/@/api/sys/user';
+=======
+import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
+<<<<<<< HEAD
+=======
+import { isArray } from '/@/utils/is';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 import { h } from 'vue';
 
 interface UserState {
@@ -83,12 +91,16 @@ export const useUserStore = defineStore({
      */
     async login(
       params: LoginParams & {
+<<<<<<< HEAD
         isDomainLogin: boolean;
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         goHome?: boolean;
         mode?: ErrorMessageMode;
       },
     ): Promise<GetUserInfoModel | null> {
       try {
+<<<<<<< HEAD
         const { goHome = true, mode, isDomainLogin, ...loginParams } = params;
         const data = isDomainLogin
           ? await domainLoginApi(loginParams, mode)
@@ -99,14 +111,30 @@ export const useUserStore = defineStore({
         // save token
         await this.afterLoginAction(goHome);
         return data;
+=======
+        const { goHome = true, mode, ...loginParams } = params;
+        const data = await loginApi(loginParams, mode);
+        const { token } = data;
+
+        // save token
+        this.setToken(token);
+        return this.afterLoginAction(goHome);
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       } catch (error) {
         return Promise.reject(error);
       }
     },
+<<<<<<< HEAD
     async afterLoginAction(goHome?: boolean): Promise<null> {
       if (!this.getToken) return null;
       // get user info
       // const userInfo = await this.getUserInfoAction();
+=======
+    async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
+      if (!this.getToken) return null;
+      // get user info
+      const userInfo = await this.getUserInfoAction();
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
@@ -121,6 +149,7 @@ export const useUserStore = defineStore({
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
           permissionStore.setDynamicAddedRoute(true);
         }
+<<<<<<< HEAD
         // goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
         goHome && (await router.replace(PageEnum.BASE_HOME));
       }
@@ -140,10 +169,31 @@ export const useUserStore = defineStore({
     //   this.setUserInfo(userInfo);
     //   return userInfo;
     // },
+=======
+        goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
+      }
+      return userInfo;
+    },
+    async getUserInfoAction(): Promise<UserInfo | null> {
+      if (!this.getToken) return null;
+      const userInfo = await getUserInfo();
+      const { roles = [] } = userInfo;
+      if (isArray(roles)) {
+        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        this.setRoleList(roleList);
+      } else {
+        userInfo.roles = [];
+        this.setRoleList([]);
+      }
+      this.setUserInfo(userInfo);
+      return userInfo;
+    },
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     /**
      * @description: logout
      */
     async logout(goLogin = false) {
+<<<<<<< HEAD
       // if (this.getToken) {
       //   try {
       //     await doLogout();
@@ -151,6 +201,15 @@ export const useUserStore = defineStore({
       //     console.log('注销Token失败');
       //   }
       // }
+=======
+      if (this.getToken) {
+        try {
+          await doLogout();
+        } catch {
+          console.log('注销Token失败');
+        }
+      }
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);

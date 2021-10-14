@@ -37,16 +37,28 @@
 
       <ErrorAction v-if="getUseErrorHandle" :class="`${prefixCls}-action__item error-action`" />
 
+<<<<<<< HEAD
       <!-- <Notify v-if="getShowNotice" :class="`${prefixCls}-action__item notify-item`" /> -->
 
       <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
 
       <!-- <AppLocalePicker
+=======
+      <Notify v-if="getShowNotice" :class="`${prefixCls}-action__item notify-item`" />
+
+      <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
+
+      <AppLocalePicker
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         v-if="getShowLocalePicker"
         :reload="true"
         :showText="false"
         :class="`${prefixCls}-action__item`"
+<<<<<<< HEAD
       /> -->
+=======
+      />
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
       <UserDropDown :theme="getHeaderTheme" />
 
@@ -72,8 +84,14 @@
 
   import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
   import { SettingButtonPositionEnum } from '/@/enums/appEnum';
+<<<<<<< HEAD
 
   import { UserDropDown, LayoutBreadcrumb, FullScreen, ErrorAction } from './components';
+=======
+  import { AppLocalePicker } from '/@/components/Application';
+
+  import { UserDropDown, LayoutBreadcrumb, FullScreen, Notify, ErrorAction } from './components';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
 
@@ -89,7 +107,13 @@
       LayoutBreadcrumb,
       LayoutMenu,
       UserDropDown,
+<<<<<<< HEAD
       FullScreen,
+=======
+      AppLocalePicker,
+      FullScreen,
+      Notify,
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       AppSearch,
       ErrorAction,
       SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue'), {

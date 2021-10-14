@@ -146,10 +146,13 @@ export interface GlobConfig {
   urlPrefix?: string;
   // Project abbreviation
   shortName: string;
+<<<<<<< HEAD
   //是否开启域登录  1系统登录 2仅域登录  3单选模式默认域登录
   loginConfig: number;
   // 是否显示系统管理->菜单管理
   menuPage: string;
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 }
 export interface GlobEnvConfig {
   // Site title
@@ -162,8 +165,11 @@ export interface GlobEnvConfig {
   VITE_GLOB_APP_SHORT_NAME: string;
   // Upload url
   VITE_GLOB_UPLOAD_URL?: string;
+<<<<<<< HEAD
   //是否开启域登录  1仅域登录 2系统登录 3单选默认域登录
   VITE_GLOB_LOGIN_CONFIG: number;
   //是否显示系统管理->菜单管理
   VITE_GLOB_MENU_PAGE: string;
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 }

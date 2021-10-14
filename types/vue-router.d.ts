@@ -5,6 +5,13 @@ declare module 'vue-router' {
     orderNo?: number;
     // title
     title: string;
+<<<<<<< HEAD
+=======
+    // dynamic router level.
+    dynamicLevel?: number;
+    // dynamic router real route path (For performance).
+    realPath?: string;
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     // Whether to ignore permissions
     ignoreAuth?: boolean;
     // role info

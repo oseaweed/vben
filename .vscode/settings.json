@@ -107,9 +107,14 @@
   },
   "[vue]": {
     "editor.codeActionsOnSave": {
+<<<<<<< HEAD
       "source.fixAll.eslint": true
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+=======
+      "source.fixAll.eslint": false
+    }
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   },
   "i18n-ally.localesPaths": ["src/locales/lang"],
   "i18n-ally.keystyle": "nested",

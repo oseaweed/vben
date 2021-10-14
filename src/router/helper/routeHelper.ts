@@ -6,6 +6,7 @@ import { cloneDeep, omit } from 'lodash-es';
 import { warn } from '/@/utils/log';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+<<<<<<< HEAD
 const modules = import.meta.globEager('../routes/modules/**/*.ts');
 const menuModules: AppRouteModule[] = [];
 Object.keys(modules).forEach((key) => {
@@ -14,6 +15,8 @@ Object.keys(modules).forEach((key) => {
   menuModules.push(...modList);
 });
 
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 export type LayoutMapKey = 'LAYOUT';
 const IFRAME = () => import('/@/views/sys/iframe/FrameBlank.vue');
 
@@ -81,8 +84,12 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
     const component = route.component as string;
     if (component) {
       if (component.toUpperCase() === 'LAYOUT') {
+<<<<<<< HEAD
         // route.component = LayoutMap.get(component.toUpperCase());
         route.component = LayoutMap.get((route.component as string).toUpperCase() as LayoutMapKey);
+=======
+        route.component = LayoutMap.get(component.toUpperCase());
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       } else {
         route.children = [cloneDeep(route)];
         route.component = LAYOUT;
@@ -98,12 +105,15 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
     }
     route.children && asyncImportRoute(route.children);
   });
+<<<<<<< HEAD
   // 合并无权限菜单
   routeList = [...routeList, ...menuModules];
 
   routeList.sort((a, b) => {
     return (a.orderNo || 0) - (b.orderNo || 0);
   });
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   return routeList as unknown as T[];
 }
 

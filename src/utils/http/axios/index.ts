@@ -16,7 +16,10 @@ import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
 import { useUserStoreWithOut } from '/@/store/modules/user';
+<<<<<<< HEAD
 import { Base64 } from 'js-base64';
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
@@ -43,12 +46,17 @@ const transform: AxiosTransform = {
     }
     // 错误的时候返回
 
+<<<<<<< HEAD
     const { data, config } = res;
+=======
+    const { data } = res;
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     if (!data) {
       // return '[HTTP] Request has no return value';
       throw new Error(t('sys.api.apiRequestFailed'));
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+<<<<<<< HEAD
     const { success, msg, code, data: result } = data;
     // 处理文件流
     const { responseType } = config;
@@ -56,6 +64,11 @@ const transform: AxiosTransform = {
       return data;
     }
     // // 这里逻辑可以根据项目进行修改
+=======
+    const { code, result, message } = data;
+
+    // 这里逻辑可以根据项目进行修改
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
     if (hasSuccess) {
       return result;
@@ -72,13 +85,19 @@ const transform: AxiosTransform = {
         userStore.logout(true);
         break;
       default:
+<<<<<<< HEAD
         if (msg) {
           timeoutMsg = msg;
+=======
+        if (message) {
+          timeoutMsg = message;
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         }
     }
 
     // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
     // errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
+<<<<<<< HEAD
     if (success === false || code !== ResultEnum.SUCCESS) {
       if (options.errorMessageMode === 'modal') {
         createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
@@ -87,6 +106,12 @@ const transform: AxiosTransform = {
       }
       Promise.reject(new Error(msg));
       throw new Error(t('sys.api.apiRequestFailed'));
+=======
+    if (options.errorMessageMode === 'modal') {
+      createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
+    } else if (options.errorMessageMode === 'message') {
+      createMessage.error(timeoutMsg);
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     }
 
     throw new Error(timeoutMsg || t('sys.api.apiRequestFailed'));
@@ -109,6 +134,7 @@ const transform: AxiosTransform = {
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
+<<<<<<< HEAD
         // config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
         config.params = Object.assign(params || {});
       } else {
@@ -116,6 +142,12 @@ const transform: AxiosTransform = {
         // config.url = config.url + params + `${joinTimestamp(joinTime, true)}`;
         config.url = config.url + params;
 
+=======
+        config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
+      } else {
+        // 兼容restful风格
+        config.url = config.url + params + `${joinTimestamp(joinTime, true)}`;
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         config.params = undefined;
       }
     } else {
@@ -152,8 +184,13 @@ const transform: AxiosTransform = {
     const token = getToken();
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
+<<<<<<< HEAD
       config.headers['Blade-Auth'] = options.bladeAuthScheme
         ? `${options.bladeAuthScheme} ${token}`
+=======
+      (config as Recordable).headers.Authorization = options.authenticationScheme
+        ? `${options.authenticationScheme} ${token}`
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         : token;
     }
     return config;
@@ -195,8 +232,13 @@ const transform: AxiosTransform = {
         }
         return Promise.reject(error);
       }
+<<<<<<< HEAD
     } catch (error: any) {
       throw new Error(error);
+=======
+    } catch (error) {
+      throw new Error(error as unknown as string);
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     }
 
     checkStatus(error?.response?.status, msg, errorMessageMode);
@@ -211,15 +253,23 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // authentication schemes，e.g: Bearer
         // authenticationScheme: 'Bearer',
+<<<<<<< HEAD
         bladeAuthScheme: 'bearer',
+=======
+        authenticationScheme: '',
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         timeout: 10 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
 
+<<<<<<< HEAD
         headers: {
           'Content-Type': ContentTypeEnum.JSON,
           Authorization: `Basic ${Base64.encode('saber:saber_secret')}`,
         },
+=======
+        headers: { 'Content-Type': ContentTypeEnum.JSON },
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         // 如果是form-data格式
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
         // 数据处理方式

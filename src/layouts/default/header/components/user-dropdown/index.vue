@@ -1,10 +1,17 @@
 <template>
   <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
+<<<<<<< HEAD
       <img :class="`${prefixCls}__header`" :src="headerImg" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.userName }}
+=======
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
+      <span :class="`${prefixCls}__info hidden md:block`">
+        <span :class="`${prefixCls}__name  `" class="truncate">
+          {{ getUserInfo.realName }}
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         </span>
       </span>
     </span>
@@ -17,8 +24,12 @@
           icon="ion:document-text-outline"
           v-if="getShowDoc"
         />
+<<<<<<< HEAD
         <MenuItem key="password" text="修改密码" icon="ant-design:security-scan-outlined" />
         <MenuDivider />
+=======
+        <MenuDivider v-if="getShowDoc" />
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         <MenuItem
           v-if="getUseLockPage"
           key="lock"
@@ -34,7 +45,10 @@
     </template>
   </Dropdown>
   <LockAction @register="register" />
+<<<<<<< HEAD
   <PasswordAction @register="passwordRegister" />
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 </template>
 <script lang="ts">
   // components
@@ -56,7 +70,11 @@
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
+<<<<<<< HEAD
   type MenuEvent = 'logout' | 'doc' | 'lock' | 'password';
+=======
+  type MenuEvent = 'logout' | 'doc' | 'lock';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -66,7 +84,10 @@
       MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
       MenuDivider: Menu.Divider,
       LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
+<<<<<<< HEAD
       PasswordAction: createAsyncComponent(() => import('../personal/UpdatePasswordModal.vue')),
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     },
     props: {
       theme: propTypes.oneOf(['dark', 'light']),
@@ -78,8 +99,13 @@
       const userStore = useUserStore();
 
       const getUserInfo = computed(() => {
+<<<<<<< HEAD
         const { userName = '' } = userStore.getUserInfo || {};
         return { userName };
+=======
+        const { realName = '', avatar, desc } = userStore.getUserInfo || {};
+        return { realName, avatar: avatar || headerImg, desc };
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       });
 
       const [register, { openModal }] = useModal();
@@ -98,6 +124,7 @@
         openWindow(DOC_URL);
       }
 
+<<<<<<< HEAD
       // 修改密码
       const [passwordRegister, { openModal: openPasswordModal }] = useModal();
 
@@ -105,6 +132,8 @@
         openPasswordModal(true);
       }
 
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       function handleMenuClick(e: { key: MenuEvent }) {
         switch (e.key) {
           case 'logout':
@@ -116,9 +145,12 @@
           case 'lock':
             handleLock();
             break;
+<<<<<<< HEAD
           case 'password':
             changePassword();
             break;
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         }
       }
 
@@ -130,8 +162,11 @@
         getShowDoc,
         register,
         getUseLockPage,
+<<<<<<< HEAD
         passwordRegister,
         headerImg,
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       };
     },
   });

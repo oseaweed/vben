@@ -134,7 +134,13 @@
           isClickGo.value = false;
           return;
         }
+<<<<<<< HEAD
         const path = (route || unref(currentRoute)).path;
+=======
+        const path =
+          (route || unref(currentRoute)).meta?.currentActiveMenu ||
+          (route || unref(currentRoute)).path;
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         setOpenKeys(path);
         if (unref(currentActiveMenu)) return;
         if (props.isHorizontal && unref(getSplit)) {

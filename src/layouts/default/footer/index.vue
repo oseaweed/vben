@@ -7,7 +7,11 @@
 
       <a @click="openWindow(DOC_URL)">{{ t('layout.footer.onlineDocument') }}</a>
     </div>
+<<<<<<< HEAD
     <div>Copyright &copy;风险管理系统</div>
+=======
+    <div>Copyright &copy;2020 Vben Admin</div>
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   </Footer>
 </template>
 

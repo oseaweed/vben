@@ -65,7 +65,11 @@ export default {
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
+<<<<<<< HEAD
     signInTitle: '**基金风险管理系统',
+=======
+    signInTitle: '开箱即用的中后台管理系统',
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     signInDesc: '输入您的个人详细信息开始使用！',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,

@@ -84,6 +84,10 @@ export default {
     breadcrumb: '面包屑',
     breadcrumbIcon: '面包屑图标',
     tabs: '标签页',
+<<<<<<< HEAD
+=======
+    tabDetail: '标签详情页',
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     tabsQuickBtn: '标签页快捷按钮',
     tabsRedoBtn: '标签页刷新按钮',
     tabsFoldBtn: '标签页折叠按钮',

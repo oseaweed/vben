@@ -84,6 +84,10 @@ export default {
     breadcrumb: 'Breadcrumbs',
     breadcrumbIcon: 'Breadcrumbs Icon',
     tabs: 'Tabs',
+<<<<<<< HEAD
+=======
+    tabDetail: 'Tab Detail',
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     tabsQuickBtn: 'Tabs quick button',
     tabsRedoBtn: 'Tabs redo button',
     tabsFoldBtn: 'Tabs flod button',

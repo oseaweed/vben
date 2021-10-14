@@ -32,8 +32,13 @@ export interface ErrorLogInfo {
 
 export interface UserInfo {
   userId: string | number;
+<<<<<<< HEAD
   account: string; // 登陆账户名
   userName: string; // 用户名
+=======
+  username: string;
+  realName: string;
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   avatar: string;
   desc?: string;
   homePath?: string;

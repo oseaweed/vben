@@ -18,13 +18,20 @@ import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 
 import { filter } from '/@/utils/helper/treeHelper';
 
+<<<<<<< HEAD
 import { getMenuListById } from '/@/api/system/menu';
+=======
+import { getMenuList } from '/@/api/sys/menu';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 import { getPermCode } from '/@/api/sys/user';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 import { PageEnum } from '/@/enums/pageEnum';
+<<<<<<< HEAD
 import { MenuInfo } from '/@/api/system/model/menuModel';
 import { useGlobSetting } from '/@/hooks/setting';
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
 interface PermissionState {
   // Permission code list
@@ -185,6 +192,7 @@ export const usePermissionStore = defineStore({
           // !Simulate to obtain permission codes from the background,
           // this function may only need to be executed once, and the actual project can be put at the right time by itself
           let routeList: AppRouteRecordRaw[] = [];
+<<<<<<< HEAD
           // try {
           //   this.changePermissionCode();
           //   routeList = (await getMenuList()) as AppRouteRecordRaw[];
@@ -212,6 +220,14 @@ export const usePermissionStore = defineStore({
             };
           };
           routeList = (routeApiList.length && routeApiList.map((item) => mapTree(item))) || [];
+=======
+          try {
+            this.changePermissionCode();
+            routeList = (await getMenuList()) as AppRouteRecordRaw[];
+          } catch (error) {
+            console.error(error);
+          }
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
           // Dynamically introduce components
           routeList = transformObjToRoute(routeList);

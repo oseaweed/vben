@@ -24,7 +24,11 @@ const setting: ProjectConfig = {
   settingButtonPosition: SettingButtonPositionEnum.AUTO,
 
   // Permission mode
+<<<<<<< HEAD
   permissionMode: PermissionModeEnum.BACK,
+=======
+  permissionMode: PermissionModeEnum.ROUTE_MAPPING,
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
   // Permission-related cache is stored in sessionStorage or localStorage
   permissionCacheType: CacheTypeEnum.LOCAL,
@@ -68,7 +72,11 @@ const setting: ProjectConfig = {
     // Whether to show the full screen button
     showFullScreen: true,
     // Whether to show the document button
+<<<<<<< HEAD
     showDoc: false,
+=======
+    showDoc: true,
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     // Whether to show the notification button
     showNotice: true,
     // Whether to display the menu search

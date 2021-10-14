@@ -13,7 +13,10 @@ const dashboard: AppRouteModule = {
     icon: 'simple-icons:about-dot-me',
     title: t('routes.dashboard.about'),
     orderNo: 100000,
+<<<<<<< HEAD
     hideMenu: true,
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   },
   children: [
     {

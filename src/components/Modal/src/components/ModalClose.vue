@@ -97,7 +97,11 @@
       }
     }
 
+<<<<<<< HEAD
     & span:nth-child(2) {
+=======
+    & span:last-child {
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       &:hover {
         color: @error-color;
       }

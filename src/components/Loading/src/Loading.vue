@@ -1,5 +1,14 @@
 <template>
+<<<<<<< HEAD
   <section class="full-loading" :class="{ absolute }" v-show="loading">
+=======
+  <section
+    class="full-loading"
+    :class="{ absolute, [theme]: !!theme }"
+    :style="[background ? `background-color: ${background}` : '']"
+    v-show="loading"
+  >
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     <Spin v-bind="$attrs" :tip="tip" :size="size" :spinning="loading" />
   </section>
 </template>
@@ -35,6 +44,12 @@
       background: {
         type: String as PropType<string>,
       },
+<<<<<<< HEAD
+=======
+      theme: {
+        type: String as PropType<'dark' | 'light'>,
+      },
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     },
   });
 </script>
@@ -60,8 +75,19 @@
   }
 
   html[data-theme='dark'] {
+<<<<<<< HEAD
     .full-loading {
       background-color: @modal-mask-bg;
     }
   }
+=======
+    .full-loading:not(.light) {
+      background-color: @modal-mask-bg;
+    }
+  }
+
+  .full-loading.dark {
+    background-color: @modal-mask-bg;
+  }
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 </style>

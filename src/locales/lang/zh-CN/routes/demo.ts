@@ -67,6 +67,10 @@ export default {
     icon: '图标',
     sessionTimeout: '登录过期',
     tabs: '标签页操作',
+<<<<<<< HEAD
+=======
+    tabDetail: '标签详情页',
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
     print: '打印',
     contextMenu: '右键菜单',
     download: '文件下载',

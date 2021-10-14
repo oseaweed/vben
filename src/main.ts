@@ -14,8 +14,11 @@ import { setupStore } from '/@/store';
 import { setupGlobDirectives } from '/@/directives';
 import { setupI18n } from '/@/locales/setupI18n';
 import { registerGlobComp } from '/@/components/registerGlobComp';
+<<<<<<< HEAD
 import VueGridLayout from 'vue-grid-layout';
 import 'echarts-liquidfill';
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
 // Importing on demand in local development will increase the number of browser requests by around 20%.
 // This may slow down the browser refresh speed.
@@ -51,7 +54,10 @@ async function bootstrap() {
 
   // Configure global error handling
   setupErrorHandle(app);
+<<<<<<< HEAD
   app.use(VueGridLayout);
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
   // https://next.router.vuejs.org/api/#isready
   // await router.isReady();

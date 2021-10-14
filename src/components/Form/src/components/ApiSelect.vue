@@ -77,9 +77,15 @@
           if (next) {
             const value = next[valueField];
             prev.push({
+<<<<<<< HEAD
               label: next[labelField],
               value: numberToString ? `${value}` : value,
               ...omit(next, [labelField, valueField]),
+=======
+              ...omit(next, [labelField, valueField]),
+              label: next[labelField],
+              value: numberToString ? `${value}` : value,
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
             });
           }
           return prev;

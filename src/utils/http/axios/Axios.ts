@@ -1,11 +1,19 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+<<<<<<< HEAD
 import type { RequestOptions, Result, UploadFileParams } from '../../../../types/axios';
+=======
+import type { RequestOptions, Result, UploadFileParams } from '/#/axios';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 import type { CreateAxiosOptions } from './axiosTransform';
 import axios from 'axios';
 import qs from 'qs';
 import { AxiosCanceler } from './axiosCancel';
 import { isFunction } from '/@/utils/is';
+<<<<<<< HEAD
 import { cloneDeep, omit } from 'lodash-es';
+=======
+import { cloneDeep } from 'lodash-es';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 import { ContentTypeEnum } from '/@/enums/httpEnum';
 import { RequestEnum } from '/@/enums/httpEnum';
 
@@ -121,11 +129,25 @@ export class VAxios {
    */
   uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
     const formData = new window.FormData();
+<<<<<<< HEAD
 
     if (params.data) {
       Object.keys(params.data).forEach((key) => {
         if (!params.data) return;
         const value = params.data[key];
+=======
+    const customFilename = params.name || 'file';
+
+    if (params.filename) {
+      formData.append(customFilename, params.file, params.filename);
+    } else {
+      formData.append(customFilename, params.file);
+    }
+
+    if (params.data) {
+      Object.keys(params.data).forEach((key) => {
+        const value = params.data![key];
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         if (Array.isArray(value)) {
           value.forEach((item) => {
             formData.append(`${key}[]`, item);
@@ -133,6 +155,7 @@ export class VAxios {
           return;
         }
 
+<<<<<<< HEAD
         formData.append(key, params.data[key]);
       });
     }
@@ -142,6 +165,11 @@ export class VAxios {
     Object.keys(customParams).forEach((key) => {
       formData.append(key, customParams[key]);
     });
+=======
+        formData.append(key, params.data![key]);
+      });
+    }
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
     return this.axiosInstance.request<T>({
       ...config,

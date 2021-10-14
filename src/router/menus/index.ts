@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import type { Menu, MenuModule, AppRouteModule } from '/@/router/types';
+=======
+import type { Menu, MenuModule } from '/@/router/types';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 import type { RouteRecordNormalized } from 'vue-router';
 
 import { useAppStoreWithOut } from '/@/store/modules/app';
@@ -10,6 +14,7 @@ import { router } from '/@/router';
 import { PermissionModeEnum } from '/@/enums/appEnum';
 import { pathToRegexp } from 'path-to-regexp';
 
+<<<<<<< HEAD
 // const modules = import.meta.globEager('./modules/**/*.ts');
 const modules = import.meta.globEager('../routes/modules/**/*.ts');
 
@@ -57,6 +62,16 @@ Object.keys(modules).forEach((key) => {
     menu: menuItem,
   };
   menuModules.push(menuModuleItme);
+=======
+const modules = import.meta.globEager('./modules/**/*.ts');
+
+const menuModules: MenuModule[] = [];
+
+Object.keys(modules).forEach((key) => {
+  const mod = modules[key].default || {};
+  const modList = Array.isArray(mod) ? [...mod] : [mod];
+  menuModules.push(...modList);
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 });
 
 // ===========================
@@ -93,8 +108,12 @@ const staticMenus: Menu[] = [];
 async function getAsyncMenus() {
   const permissionStore = usePermissionStore();
   if (isBackMode()) {
+<<<<<<< HEAD
     // return permissionStore.getBackMenuList.filter((item) => !item.meta?.hideMenu && !item.hideMenu);
     return permissionStore.getBackMenuList;
+=======
+    return permissionStore.getBackMenuList.filter((item) => !item.meta?.hideMenu && !item.hideMenu);
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   }
   if (isRouteMappingMode()) {
     return permissionStore.getFrontMenuList.filter((item) => !item.hideMenu);

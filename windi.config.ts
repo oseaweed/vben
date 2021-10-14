@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import colors from 'windicss/colors';
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 import { defineConfig } from 'vite-plugin-windicss';
 import { primaryColor } from './build/config/themeConfig';
 
@@ -11,7 +14,10 @@ export default defineConfig({
         '-1': '-1',
       },
       colors: {
+<<<<<<< HEAD
         ...colors,
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         primary: primaryColor,
       },
       screens: {

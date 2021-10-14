@@ -24,6 +24,7 @@
         :placeholder="t('sys.login.password')"
       />
     </FormItem>
+<<<<<<< HEAD
     <FormItem name="code" class="relative enter-x enter-code">
       <Input size="large" v-model:value="formData.code" placeholder="请输入验证码" />
       <img
@@ -43,14 +44,30 @@
           <!-- <Checkbox v-model:checked="rememberMe" size="small">
             {{ t('sys.login.rememberMe') }}
           </Checkbox> -->
+=======
+
+    <ARow class="enter-x">
+      <ACol :span="12">
+        <FormItem>
+          <!-- No logic, you need to deal with it yourself -->
+          <Checkbox v-model:checked="rememberMe" size="small">
+            {{ t('sys.login.rememberMe') }}
+          </Checkbox>
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         </FormItem>
       </ACol>
       <ACol :span="12">
         <FormItem :style="{ 'text-align': 'right' }">
           <!-- No logic, you need to deal with it yourself -->
+<<<<<<< HEAD
           <!-- <Button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
             {{ t('sys.login.forgetPassword') }}
           </Button> -->
+=======
+          <Button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
+            {{ t('sys.login.forgetPassword') }}
+          </Button>
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         </FormItem>
       </ACol>
     </ARow>
@@ -63,7 +80,11 @@
         {{ t('sys.login.registerButton') }}
       </Button> -->
     </FormItem>
+<<<<<<< HEAD
     <!-- <ARow class="enter-x">
+=======
+    <ARow class="enter-x">
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
       <ACol :md="8" :xs="24">
         <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
           {{ t('sys.login.mobileSignInFormTitle') }}
@@ -79,6 +100,7 @@
           {{ t('sys.login.registerButton') }}
         </Button>
       </ACol>
+<<<<<<< HEAD
     </ARow> -->
 
     <!-- <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider> -->
@@ -89,6 +111,32 @@
 
   import { Form, Input, Row, Col, Button } from 'ant-design-vue';
 
+=======
+    </ARow>
+
+    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
+
+    <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
+      <GithubFilled />
+      <WechatFilled />
+      <AlipayCircleFilled />
+      <GoogleCircleFilled />
+      <TwitterCircleFilled />
+    </div>
+  </Form>
+</template>
+<script lang="ts" setup>
+  import { reactive, ref, unref, computed } from 'vue';
+
+  import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
+  import {
+    GithubFilled,
+    WechatFilled,
+    AlipayCircleFilled,
+    GoogleCircleFilled,
+    TwitterCircleFilled,
+  } from '@ant-design/icons-vue';
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   import LoginFormTitle from './LoginFormTitle.vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -98,10 +146,13 @@
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
   //import { onKeyStroke } from '@vueuse/core';
+<<<<<<< HEAD
   import { useGlobSetting } from '/@/hooks/setting';
   const { loginConfig } = useGlobSetting();
   import componentSetting from '/@/settings/componentSetting';
   import { getCaptchaCode } from '/@/api/sys/user';
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
   const ACol = Col;
   const ARow = Row;
@@ -117,6 +168,7 @@
 
   const formRef = ref();
   const loading = ref(false);
+<<<<<<< HEAD
   // const rememberMe = ref(false);
   const captchaInfo = ref({ image: '', key: '' }); // 验证码
 
@@ -124,6 +176,13 @@
     account: '',
     password: '',
     code: '',
+=======
+  const rememberMe = ref(false);
+
+  const formData = reactive({
+    account: 'vben',
+    password: '123456',
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   });
 
   const { validForm } = useFormValid(formRef);
@@ -131,13 +190,17 @@
   //onKeyStroke('Enter', handleLogin);
 
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
+<<<<<<< HEAD
   const { login } = componentSetting;
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 
   async function handleLogin() {
     const data = await validForm();
     if (!data) return;
     try {
       loading.value = true;
+<<<<<<< HEAD
       const userInfo = await userStore.login(
         toRaw({
           isDomainLogin: loginType.value == '2' || loginConfig == 2, //域登录
@@ -162,12 +225,31 @@
       createErrorModal({
         title: t('sys.api.errorTip'),
         content: error.message || t('sys.api.networkExceptionMsg'),
+=======
+      const userInfo = await userStore.login({
+        password: data.password,
+        username: data.account,
+        mode: 'none', //不要默认的错误提示
+      });
+      if (userInfo) {
+        notification.success({
+          message: t('sys.login.loginSuccessTitle'),
+          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+          duration: 3,
+        });
+      }
+    } catch (error) {
+      createErrorModal({
+        title: t('sys.api.errorTip'),
+        content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
         getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
       });
     } finally {
       loading.value = false;
     }
   }
+<<<<<<< HEAD
 
   // 获取验证码
   async function handleVerificationCode() {
@@ -180,4 +262,6 @@
   onMounted(() => {
     handleVerificationCode();
   });
+=======
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
 </script>

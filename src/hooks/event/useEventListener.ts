@@ -20,9 +20,13 @@ export function useEventListener({
   autoRemove = true,
   isDebounce = true,
   wait = 80,
+<<<<<<< HEAD
 }: UseEventParams): {
   removeEvent: RemoveEventFn;
 } {
+=======
+}: UseEventParams): { removeEvent: RemoveEventFn } {
+>>>>>>> 5902886798cc51e7f32ca878d74efe4da2194ebb
   /* eslint-disable-next-line */
   let remove: RemoveEventFn = () => {};
   const isAddRef = ref(false);
